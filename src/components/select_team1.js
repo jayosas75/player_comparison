@@ -13,10 +13,15 @@ import * as actions from '../actions';
 import RaisedButton from 'material-ui/RaisedButton';
 
 let chosenTeam = null;
+let chosenPosition = null;
 
 function showTeamClicked(event) {
     console.log('this is team that was clicked: ', event.target.innerText);
     chosenTeam = event.target.innerText;
+}
+function showPositionClicked(event) {
+    console.log('this is position that was clicked: ', event.target.innerText);
+    chosenPosition = event.target.innerText;
 }
 
 const teams = [];
@@ -27,6 +32,14 @@ const NFLteams = ['Bears','Bengals','Bills','Broncos','Browns','Buccaneers','Col
 
 for (let i = 0; i < 31; i++ ) {
     teams.push(<MenuItem value={NFLteams[i]} key={i} primaryText={`${NFLteams[i]}`} onTouchTap={showTeamClicked.bind(this)} />);
+}
+
+const positions = [];
+
+const NFLPositions = ['Quarterback', 'Running back', 'Wide receiver', 'Tight end', 'Kicker'];
+
+for (let i = 0; i < 5; i++ ) {
+    positions.push(<MenuItem value={NFLPositions[i]} key={i} primaryText={`${NFLPositions[i]}`} onTouchTap={showPositionClicked.bind(this)} />);
 }
 
 
@@ -83,7 +96,8 @@ class SelectTeam1 extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {valueTeam: 'Bears'};
+        this.state = {valueTeam: 'Bears',
+                      valuePosition: 'Quarterback'};
     }
 
     handleClickPlayer2(){
@@ -91,14 +105,18 @@ class SelectTeam1 extends Component {
     }
 
     handleChange1 = (event, index, valueTeam) => this.setState({valueTeam});
+    handleChange2 = (event, index, valuePosition) => this.setState({valuePosition});
 
     checkProps(){
         console.log(this.props);
     }
 
     submitTeam(){
-        let team = chosenTeam;
-        this.props.fetch_team_players1(team);
+        let values = {
+            team: chosenTeam,
+            position: chosenPosition
+        };
+        this.props.fetch_team_players1(values);
     }
 
     render(){
@@ -116,8 +134,18 @@ class SelectTeam1 extends Component {
                                   onChange={this.handleChange1}
                                   autoWidth={false}
                                   labelStyle={{ color: teal600 }}
-                    >
+                     >
                         {teams}
+                </DropDownMenu>
+                    <br/>
+                    <DropDownMenu style={dropDownStyle.customWidth}
+                                  maxHeight={300}
+                                  value={this.state.valuePosition}
+                                  onChange={this.handleChange2}
+                                  autoWidth={false}
+                                  labelStyle={{ color: teal600 }}
+                    >
+                        {positions}
                     </DropDownMenu>
                     <br/>
                     <RaisedButton label="Go" style={buttonMargin} onTouchTap={this.submitTeam.bind(this)}/>

@@ -7,9 +7,27 @@ const API_KEY = {
     headers: {'Ocp-Apim-Subscription-Key': 'f3db805d5d56499eb11e3aa08864614f'}
 };
 
-export function fetch_team_players1(team){
+export function fetch_team_players1(values){
     let teamID = null;
-    switch(team){
+    let position = null;
+    switch(values.position){
+        case 'Quarterback':
+            position = 'QB';
+            break;
+        case 'Running back':
+            position = 'RB';
+            break;
+        case 'Wide receiver':
+            position = 'WR';
+            break;
+        case 'Tight End':
+            position = 'TE';
+            break;
+        case 'Kicker':
+            position = 'K';
+            break;
+    }
+    switch(values.team){
         case 'Bears':
             teamID = 'CHI';
             break;
@@ -111,11 +129,11 @@ export function fetch_team_players1(team){
             let smallerRoster = [];
             axios.get(`${BASE_URL}players/${teamID}`, API_KEY).then(resp => {
                 for(let i =0; i < resp.data.length; i++){
-                    if(resp.data[i].Position == 'QB'){
+                    if(resp.data[i].Position == position){
                         smallerRoster.push(resp.data[i]);
                     }
                 }
-                console.log('QB Only12: ', smallerRoster)
+                console.log('Selected Position from Selected Team: ', smallerRoster);
                 dispatch({
                     type: FETCH_TEAM_PLAYERS1,
                     payload: smallerRoster
