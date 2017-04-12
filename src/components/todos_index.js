@@ -21,10 +21,10 @@ const player2 = {
     display: 'inline-block',
 };
 
-class TodoIndex extends Component {
-    componentWillMount(){
-        this.props.getPlayers();
-    }
+class Home extends Component {
+    /*componentWillMount(){
+        this.props.fetchPlayers();
+    }*/
 
     render(){
         return (
@@ -40,4 +40,4 @@ class TodoIndex extends Component {
     }
 }
 
-export default TodoIndex;
+export default Home;
