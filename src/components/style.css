@@ -1,0 +1,25 @@
+
+.headerToolbarShort {
+    display: none;
+}
+@media only screen and (max-width: 590px) {
+
+    .app {
+        margin-top: 30px;
+    }
+
+    .headerToolbarWide {
+        display: none;
+    }
+
+    .headerToolbarShort {
+        display: inline;
+    }
+
+}
+
+.cardHolder {
+    height: 90vh;
+    width: 100%;
+    margin-top: 1%;
+}
