@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
-import {green900} from 'material-ui/styles/colors';
+import {teal600} from 'material-ui/styles/colors';
 import FlatButton from 'material-ui/FlatButton';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
@@ -15,7 +15,7 @@ import styles from './style.css';
 
 const toolbarStyle = {
     toolbar: {
-        backgroundColor: green900,
+        backgroundColor: teal600,
         boxShadow: '0px 1px 9px 0px rgba(0,0,0,0.75)',
         height: '60px'
     },
@@ -49,6 +49,8 @@ class Header extends Component {
             this.props.handleProfileClick();
         }
     }*/
+
+   //hi
 
 
     render(){
