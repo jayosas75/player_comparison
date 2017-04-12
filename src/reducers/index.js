@@ -1,10 +1,9 @@
 import { combineReducers } from 'redux';
-import TodoReducer from './reducer_todos';
-import { reducer as formReducer } from 'redux-form';
+import { routerReducer } from 'react-router-redux';
+import PlayerData from '../reducers/playerReducer';
 
 const rootReducer = combineReducers({
-    todos: TodoReducer,
-    form: formReducer
-});
+    playerData: PlayerData,
+    routing: routerReducer});
 
 export default rootReducer;

@@ -5,6 +5,9 @@ import Paper from 'material-ui/Paper';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import {teal600} from 'material-ui/styles/colors';
+import {browserHistory} from 'react-router';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 
 const player1 = {
     backgroundColor: 'rgba(50, 50, 50, 0.99)',
@@ -42,8 +45,11 @@ const style = {
 };
 
 class Home extends Component {
-    handleClick(){
-
+    handleClickPlayer1(){
+        browserHistory.push('/select_team1');
+    }
+    handleClickPlayer2(){
+        browserHistory.push('/select_team2');
     }
     render(){
         return (
@@ -52,7 +58,7 @@ class Home extends Component {
                     <h1 style={text}>Select</h1>
                     <h1 style={text}>Team of Player 1</h1>
                     <br/>
-                    <FloatingActionButton style={style}>
+                    <FloatingActionButton style={style} onTouchTap={this.handleClickPlayer1.bind(this)}>
                         <ContentAdd />
                     </FloatingActionButton>
 
@@ -61,7 +67,7 @@ class Home extends Component {
                     <h1 style={text2}>Select</h1>
                     <h1 style={text2}>Team of Player 2</h1>
                     <br/>
-                    <FloatingActionButton style={style} onTouchTap={this.handleClick.bind(this)}>
+                    <FloatingActionButton style={style} onTouchTap={this.handleClickPlayer2.bind(this)}>
                         <ContentAdd />
                     </FloatingActionButton>
                 </Paper>
@@ -69,5 +75,13 @@ class Home extends Component {
         )
     }
 }
+function mapStateToProps(state){
+    return {
+        SelectedTeam1: state.playerData.SelectedTeam1,
+        SelectedTeam2: state.playerData.SelectedTeam2,
+        Player1: state.playerData.player1,
+        Player2: state.playerData.player2,
+    }
+}
 
-export default Home;
+export default connect(mapStateToProps, actions)(Home);

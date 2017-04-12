@@ -1,49 +1,127 @@
 import axios from 'axios';
+import { FETCH_TEAM_PLAYERS1 } from './types';
+import {browserHistory} from 'react-router';
 
-const instance = axios.create({
-   headers: {'Content-type': 'application/x-www-form-urlencoded'}
-});
+const BASE_URL = 'https://api.fantasydata.net/v3/nfl/stats/JSON/';
+const API_KEY = {
+    headers: {'Ocp-Apim-Subscription-Key': 'f3db805d5d56499eb11e3aa08864614f'}
+};
 
-export const FETCH_TODOS = 'FETCH_TODOS';
-export const FETCH_TODO = 'FETCH_TODO';
-export const CREATE_TODO = 'CREATE_TODO';
-export const DELETE_TODO = 'DELETE_TODO';
-
-const BASE_URL = 'http://192.168.1.109/todo/';
-const API_KEY = '?key=VoodooRanger';
-
-export function fetchTodos(){
-    const request = instance.get(`${BASE_URL}${API_KEY}`);
-    return {
-        type: FETCH_TODOS,
-        payload: request
+export function fetch_team_players1(team){
+    let teamID = null;
+    switch(team){
+        case 'Bears':
+            teamID = 'CHI';
+            break;
+        case 'Bengals':
+            teamID = 'CIN';
+            break;
+        case 'Bills':
+            teamID = 'BUF';
+            break;
+        case 'Broncos':
+            teamID = 'DEN';
+            break;
+        case 'Browns':
+            teamID = 'CLE';
+            break;
+        case 'Buccaneers':
+            teamID = 'TB';
+            break;
+        case 'Colts':
+            teamID = 'IND';
+            break;
+        case 'Cardinals':
+            teamID = 'ARI';
+            break;
+        case 'Chargers':
+            teamID = 'SD';
+            break;
+        case 'Chiefs':
+            teamID = 'KC';
+            break;
+        case 'Cowboys':
+            teamID = 'DAL';
+            break;
+        case 'Dolphins':
+            teamID = 'MIA';
+            break;
+        case 'Eagles':
+            teamID = 'PHI';
+            break;
+        case 'Falcons':
+            teamID = 'ATL';
+            break;
+        case 'Jaguars':
+            teamID = 'JAC';
+            break;
+        case 'Jets':
+            teamID = 'NYJ';
+            break;
+        case 'Giants':
+            teamID = 'NYG';
+            break;
+        case 'Lions':
+            teamID = 'DET';
+            break;
+        case 'Packers':
+            teamID = 'GB';
+            break;
+        case 'Panthers':
+            teamID = 'CAR';
+            break;
+        case 'Patriots':
+            teamID = 'NE';
+            break;
+        case 'Redskins':
+            teamID = 'WAS';
+            break;
+        case 'Raiders':
+            teamID = 'OAK';
+            break;
+        case 'Rams':
+            teamID = 'LA';
+            break;
+        case 'Ravens':
+            teamID = 'BAL';
+            break;
+        case 'Saints':
+            teamID = 'NO';
+            break;
+        case 'Seahawks':
+            teamID = 'SEA';
+            break;
+        case 'Steelers':
+            teamID = 'PIT';
+            break;
+        case 'Texans':
+            teamID = 'HOU';
+            break;
+        case 'Titans':
+            teamID = 'TEN';
+            break;
+        case 'Vikings':
+            teamID = 'MIN';
+            break;
+        case '49ers':
+            teamID = 'SF';
+            break;
     }
-}
-
-export function fetchTodo(id){
-    const request = instance.get(`${BASE_URL}id/${id}${API_KEY}`);
-
-    return {
-        type: FETCH_TODO,
-        payload: request
+        return function(dispatch){
+            let smallerRoster = [];
+            axios.get(`${BASE_URL}players/${teamID}`, API_KEY).then(resp => {
+                for(let i =0; i < resp.data.length; i++){
+                    if(resp.data[i].Position == 'QB'){
+                        smallerRoster.push(resp.data[i]);
+                    }
+                }
+                console.log('QB Only12: ', smallerRoster)
+                dispatch({
+                    type: FETCH_TEAM_PLAYERS1,
+                    payload: smallerRoster
+                });
+            }).catch((err) => {
+                dispatch('error');
+            })
+        }
     }
-}
-
-export function createTodo(item){
-    const request = instance.post(`${BASE_URL}${API_KEY}`, item);
-
-    //not needed for post request
-    return {
-        type: CREATE_TODO,
-        payload: request
-    }
-}
-
-export function deleteTodo(id){
-    const request = instance.delete(`${BASE_URL}id/${id}${API_KEY}`);
-
-    return {
-        type: DELETE_TODO,
-        payload: request
-    }
-}
