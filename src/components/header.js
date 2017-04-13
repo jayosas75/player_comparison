@@ -11,7 +11,6 @@ import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Menu from 'material-ui/svg-icons/navigation/menu';
 import * as actions from '../actions';
-import styles from './style.css';
 
 const toolbarStyle = {
     toolbar: {
@@ -56,7 +55,7 @@ class Header extends Component {
     render(){
         return (
             <div>
-                <div key='signin3' className={styles.headerToolbarWide}>
+                <div key='signin3' className='headerToolbarWide'>
                     <Toolbar style={toolbarStyle.toolbar} >
                         <ToolbarGroup firstChild={true}>
                             <Link to="/" ><ToolbarTitle style={toolbarStyle.titleWide} text="NFL Player Comparison" /></Link>
@@ -69,7 +68,7 @@ class Header extends Component {
                         </ToolbarGroup>
                     </Toolbar>
                 </div>
-                <div key='signin1' className={styles.headerToolbarShort}>
+                <div key='signin1' className='headerToolbarShort'>
                     <Toolbar style={toolbarStyle.toolbar}>
                         <ToolbarGroup firstChild={true}>
                             <Link to="/"><ToolbarTitle style={toolbarStyle.titleShort} text="NFL Player Comparison"/></Link>

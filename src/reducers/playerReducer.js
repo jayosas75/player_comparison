@@ -6,7 +6,8 @@ function playerData(state = {}, action){
         case FETCH_TEAM_PLAYERS1:
             return {
                 ...state,
-                SelectedTeam1: action.payload
+                selectedTeam1: action.payload,
+                buttonHidden: true,
             };
         default:
             return state;

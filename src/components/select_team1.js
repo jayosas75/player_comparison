@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import styles from './style.css';
 import Paper from 'material-ui/Paper';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
 import {teal600} from 'material-ui/styles/colors';
 import {browserHistory} from 'react-router';
 import DropDownMenu from 'material-ui/DropDownMenu';
@@ -66,11 +63,11 @@ const player2 = {
 
 const text ={
     color: teal600,
-    fontSize: '4.0em',
+    fontSize: '3.0em',
 };
 const text2 ={
     color: 'black',
-    fontSize: '4.0em',
+    fontSize: '3.0em',
 };
 
 const style = {
@@ -100,8 +97,12 @@ class SelectTeam1 extends Component {
                       valuePosition: 'Quarterback'};
     }
 
+    handleClickPlayer1(){
+
+    }
+
     handleClickPlayer2(){
-        browserHistory.push('/select_team2')
+
     }
 
     handleChange1 = (event, index, valueTeam) => this.setState({valueTeam});
@@ -121,12 +122,11 @@ class SelectTeam1 extends Component {
 
     render(){
         return (
-            <div className={styles.cardHolder}>
+            <div className='cardHolder'>
                 <Paper style={player1} zDepth={5}>
                     <h1 style={text}>Select</h1>
                     <h1 style={text}>Team and Position</h1>
                     <h1 style={text}>of Player 1</h1>
-                    <br/>
                     <br/>
                     <DropDownMenu style={dropDownStyle.customWidth}
                                   maxHeight={300}
@@ -134,6 +134,7 @@ class SelectTeam1 extends Component {
                                   onChange={this.handleChange1}
                                   autoWidth={false}
                                   labelStyle={{ color: teal600 }}
+                                  className="toggleButton1"
                      >
                         {teams}
                 </DropDownMenu>
@@ -148,15 +149,10 @@ class SelectTeam1 extends Component {
                         {positions}
                     </DropDownMenu>
                     <br/>
-                    <RaisedButton label="Go" style={buttonMargin} onTouchTap={this.submitTeam.bind(this)}/>
-                </Paper>
-                <Paper onTouchTap={this.checkProps.bind(this)} style={player2} zDepth={5}>
-                    <h1 style={text2}>Select</h1>
-                    <h1 style={text2}>Team of Player 2</h1>
-                    <br/>
-                    <FloatingActionButton style={style} onTouchTap={this.handleClickPlayer2.bind(this)}>
-                        <ContentAdd />
-                    </FloatingActionButton>
+                    <RaisedButton label="Go"
+                                  style={buttonMargin}
+                                  className={this.props.buttonHidden ? 'buttonHidden' : ''}
+                                  onTouchTap={this.submitTeam.bind(this)}/>
                 </Paper>
             </div>
         )
@@ -165,10 +161,11 @@ class SelectTeam1 extends Component {
 
 function mapStateToProps(state){
     return {
-        SelectedTeam1: state.playerData.SelectedTeam1,
-        SelectedTeam2: state.playerData.SelectedTeam2,
-        Player1: state.playerData.player1,
-        Player2: state.playerData.player2,
+        selectedTeam1: state.playerData.selectedTeam1,
+        selectedTeam2: state.playerData.selectedTeam2,
+        player1: state.playerData.player1,
+        player2: state.playerData.player2,
+        buttonHidden: state.playerData.buttonHidden,
     }
 }
 
