@@ -22,3 +22,20 @@
     width: 100%;
     display: inline-flex;
 }
+
+.hidden {
+    display: none;
+}
+
+.inline-block {
+    color: white;
+    list-style-type: none;
+    text-decoration: underline;
+}
+
+#showSelect {
+    display: none;
+    color: white;
+    font-style: italic;
+    text-transform: uppercase;
+}

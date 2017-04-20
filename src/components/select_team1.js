@@ -11,6 +11,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 let chosenTeam = null;
 let chosenPosition = null;
+let submitButtonHit = false;
 
 function showTeamClicked(event) {
     console.log('this is team that was clicked: ', event.target.innerText);
@@ -97,16 +98,8 @@ class SelectTeam1 extends Component {
                       valuePosition: 'Quarterback'};
     }
 
-    handleClickPlayer1(){
-
-    }
-
-    handleClickPlayer2(){
-
-    }
-
-    handleChange1 = (event, index, valueTeam) => this.setState({valueTeam});
-    handleChange2 = (event, index, valuePosition) => this.setState({valuePosition});
+    handleTeamChange = (event, index, valueTeam) => this.setState({valueTeam});
+    handlePositionChange = (event, index, valuePosition) => this.setState({valuePosition});
 
     checkProps(){
         console.log(this.props);
@@ -118,12 +111,30 @@ class SelectTeam1 extends Component {
             position: chosenPosition
         };
         this.props.fetch_team_players1(values);
+        submitButtonHit = true;
+    }
+
+    renderPlayers(){
+        if(submitButtonHit === true){
+            return this.props.selectedTeam1.map(player => {
+                return (
+                        <li className="inline-block" key={player.PlayerID}>
+                            <strong>{player.Name}</strong>
+                        </li>
+                )
+            })
+        } else {
+            return;
+        }
     }
 
     render(){
         return (
             <div className='cardHolder'>
-                <Paper style={player1} zDepth={5}>
+                <Paper style={player1}
+                       zDepth={5}
+                       className={this.props.selectedTeam1 !== 'undefined' ? 'show' : 'hidden'}
+                       onClick={this.checkProps.bind(this)}>
                     <h1 style={text}>Select</h1>
                     <h1 style={text}>Team and Position</h1>
                     <h1 style={text}>of Player 1</h1>
@@ -131,7 +142,7 @@ class SelectTeam1 extends Component {
                     <DropDownMenu style={dropDownStyle.customWidth}
                                   maxHeight={300}
                                   value={this.state.valueTeam}
-                                  onChange={this.handleChange1}
+                                  onChange={this.handleTeamChange}
                                   autoWidth={false}
                                   labelStyle={{ color: teal600 }}
                                   className="toggleButton1"
@@ -142,7 +153,7 @@ class SelectTeam1 extends Component {
                     <DropDownMenu style={dropDownStyle.customWidth}
                                   maxHeight={300}
                                   value={this.state.valuePosition}
-                                  onChange={this.handleChange2}
+                                  onChange={this.handlePositionChange}
                                   autoWidth={false}
                                   labelStyle={{ color: teal600 }}
                     >
@@ -153,6 +164,8 @@ class SelectTeam1 extends Component {
                                   style={buttonMargin}
                                   className={this.props.buttonHidden ? 'buttonHidden' : ''}
                                   onTouchTap={this.submitTeam.bind(this)}/>
+                    {this.renderPlayers()}
+                    <span id='showSelect'>Select Player</span>
                 </Paper>
             </div>
         )
