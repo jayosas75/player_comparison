@@ -9,6 +9,7 @@ import SelectTeam2 from './components/select_team2';
 import reduxThunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import reducers from '../src/reducers';
+import promise from 'redux-promise';
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
 const store = createStoreWithMiddleware(reducers);

@@ -8,6 +8,7 @@ import MenuItem from 'material-ui/MenuItem';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import RaisedButton from 'material-ui/RaisedButton';
+import Snackbar from 'material-ui/Snackbar';
 
 let chosenTeam = null;
 let chosenPosition = null;
@@ -64,11 +65,11 @@ const player2 = {
 
 const text ={
     color: teal600,
-    fontSize: '3.0em',
+    fontSize: '2em',
 };
 const text2 ={
     color: 'black',
-    fontSize: '3.0em',
+    fontSize: '2em',
 };
 
 const style = {
@@ -95,7 +96,8 @@ class SelectTeam1 extends Component {
     constructor(props) {
         super(props);
         this.state = {valueTeam: 'Bears',
-                      valuePosition: 'Quarterback'};
+                      valuePosition: 'Quarterback',
+                      open: false};
     }
 
     handleTeamChange = (event, index, valueTeam) => this.setState({valueTeam});
@@ -105,7 +107,20 @@ class SelectTeam1 extends Component {
         console.log(this.props);
     }
 
+    displaySnackBar(){
+        this.setState ({
+            open: true
+        });
+    }
+
+    closeSnackBar = () => {
+        this.setState({
+            open: false,
+        });
+    };
+
     submitTeam(){
+        this.displaySnackBar();
         let values = {
             team: chosenTeam,
             position: chosenPosition
@@ -114,13 +129,24 @@ class SelectTeam1 extends Component {
         submitButtonHit = true;
     }
 
+    setPlayerToState(event){
+        event.persist();
+        console.log('player\'s ID selected: ', event.target.value)
+    };
+
     renderPlayers(){
         if(submitButtonHit === true){
             return this.props.selectedTeam1.map(player => {
                 return (
-                        <li className="inline-block" key={player.PlayerID}>
-                            <strong>{player.Name}</strong>
-                        </li>
+                    <div key={player.PlayerID}>
+                        <input type="radio" className="inline-block center"
+                               name='player'
+                               value={player.PlayerID}
+                               onClick={this.setPlayerToState.bind(this)}>
+                        </input>
+                        <label htmlFor='player'>{player.Name}</label>
+                        <br/>
+                    </div>
                 )
             })
         } else {
@@ -138,7 +164,6 @@ class SelectTeam1 extends Component {
                     <h1 style={text}>Select</h1>
                     <h1 style={text}>Team and Position</h1>
                     <h1 style={text}>of Player 1</h1>
-                    <br/>
                     <DropDownMenu style={dropDownStyle.customWidth}
                                   maxHeight={300}
                                   value={this.state.valueTeam}
@@ -164,8 +189,14 @@ class SelectTeam1 extends Component {
                                   style={buttonMargin}
                                   className={this.props.buttonHidden ? 'buttonHidden' : ''}
                                   onTouchTap={this.submitTeam.bind(this)}/>
+                    <br/>
                     {this.renderPlayers()}
-                    <span id='showSelect'>Select Player</span>
+                    <Snackbar
+                        open={this.state.open}
+                        message="Team and Position Submitted, Loading..."
+                        autoHideDuration={5000}
+                        onRequestClose={this.closeSnackBar}
+                    />
                 </Paper>
             </div>
         )
@@ -179,6 +210,7 @@ function mapStateToProps(state){
         player1: state.playerData.player1,
         player2: state.playerData.player2,
         buttonHidden: state.playerData.buttonHidden,
+        open: false,
     }
 }
 
