@@ -9,7 +9,7 @@ const API_KEY = {
 
 export function getPlayerData(playerID){
     return function(dispatch){
-        axios.get(`${BASE_URL}PlayerSeasonStatsByPlayerID/2016REG/${playerID}`, API_KEY).then(resp => {
+        axios.get(`${BASE_URL}Player/${playerID}`, API_KEY).then(resp => {
             console.log('player back from DB', resp.data);
             dispatch({
                 type: SET_PLAYER1,

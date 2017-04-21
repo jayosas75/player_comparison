@@ -43,3 +43,13 @@
 .hide {
     display: none;
 }
+
+.halfPaper1 {
+    width: 48%;
+    display: inline-block;
+}
+
+.statsLabel {
+    text-decoration: underline;
+    color: white;
+}

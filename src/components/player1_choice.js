@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 import styles from './style.css';
 import Paper from 'material-ui/Paper';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
@@ -8,6 +7,7 @@ import {teal600} from 'material-ui/styles/colors';
 import {browserHistory} from 'react-router';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
+import Img from 'react-image';
 
 function showTeamClicked(event) {
     console.log('this is team that was clicked: ', event.target.innerText);

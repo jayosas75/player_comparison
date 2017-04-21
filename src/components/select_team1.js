@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 import Paper from 'material-ui/Paper';
 import {teal600} from 'material-ui/styles/colors';
-import {browserHistory} from 'react-router';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import { connect } from 'react-redux';
@@ -13,8 +11,8 @@ import Snackbar from 'material-ui/Snackbar';
 let chosenTeam = null;
 let chosenPosition = null;
 let submitButtonHit = false;
-let playerClicked = false;
-let player1picked = null;
+let player1Info = null;
+let selectedPlayer1 = false;
 
 function showTeamClicked(event) {
     console.log('this is team that was clicked: ', event.target.innerText);
@@ -87,30 +85,17 @@ const hideResults = {
     display: 'none',
     fontFamily: 'Roboto, sans-serif',
 };
-const player2 = {
-    backgroundColor: 'white',
-    height: 600,
-    width: 525,
-    float: 'right',
-    margin: 'auto',
-    textAlign: 'center',
-    fontFamily: 'Roboto, sans-serif',
-    display: 'inline-block',
-};
 
 const text ={
     color: teal600,
     fontSize: '2em',
 };
-const text2 ={
-    color: 'black',
-    fontSize: '2em',
-};
 
-const style = {
-    marginRight: 20,
-    disabledColor: 'white'
-};
+const playerHeaderText = {
+    color: teal600,
+    fontSize: '3.0em',
+    fontFamily: 'Fantasy, sans-serif',
+}
 
 const dropDownStyle = {
     color: teal600,
@@ -172,12 +157,13 @@ class SelectTeam1 extends Component {
 
     submitPlayer(event){
         console.log('pick player button hit');
-        this.props.getPlayerData(player1picked);
+        this.props.getPlayerData(player1Info);
     }
 
     setPlayerToState(event){
         event.persist();
-        player1picked = event.target.value;
+        player1Info = event.target.value;
+        selectedPlayer1 = true;
     };
 
     renderPlayers(){
@@ -199,12 +185,69 @@ class SelectTeam1 extends Component {
     }
 
     renderSubmitPlayerButton(){
-        if(submitButtonHit === true){
+            if(submitButtonHit === true){
+                return (
+                    <RaisedButton label="Pick Player"
+                                  style={buttonMargin}
+                                  onTouchTap={this.submitPlayer.bind(this)}/>
+                )
+            }
+    };
+
+    renderPlayerName(){
+        if(this.props.player1){
             return (
-                <RaisedButton label="Pick Player"
-                              style={buttonMargin}
-                              onTouchTap={this.submitPlayer.bind(this)}/>
+                <h1 style={playerHeaderText}>{this.props.player1.Name}</h1>
             )
+        } else {
+            return (
+                <h1>No Name</h1>
+            )
+        }
+    }
+
+    renderPlayerImg(){
+        setTimeout(() => {
+            if(this.props.player1){
+                console.log('grabbing img, ', this.props.player1.PhotoUrl);
+                return (
+                    <img src="http://images.nike.com/is/image/DotCom/PDP_P/FT0225_201_A/v-flight-airlock-size-9-football.png?fmt=png-alpha" alt={'Football'} />
+                )
+            } else {
+                return <p>Img Here</p>
+            }
+        }, 5000);
+    }
+
+    renderPlayerStats(){
+        if(this.props.player1){
+            switch(this.props.player1.Position){
+                case "QB":
+                    return (
+                       <div>
+                           <div className="halfPaper1">
+                               <p className="statsLabel">Completion Percentage</p>
+                               <p>{this.props.player1.PlayerSeason.PassingCompletionPercentage}</p>
+                               <p className="statsLabel">Passing Yards</p>
+                               <p>{this.props.player1.PlayerSeason.PassingYards}</p>
+                               <p className="statsLabel">Passing Touchdowns</p>
+                               <p>{this.props.player1.PlayerSeason.PassingTouchdowns}</p>
+                               <p className="statsLabel">Interceptions</p>
+                               <p>{this.props.player1.PlayerSeason.PassingInterceptions}</p>
+                           </div>
+                           <div className="halfPaper1">
+                               <p className="statsLabel">Rushing Yards</p>
+                               <p>{this.props.player1.PlayerSeason.RushingYards}</p>
+                               <p className="statsLabel">Rushing Touchdowns</p>
+                               <p>{this.props.player1.PlayerSeason.RushingTouchdowns}</p>
+                               <p className="statsLabel">Fantasy Points</p>
+                               <p>{this.props.player1.PlayerSeason.FantasyPointsPPR}</p>
+                               <p className="statsLabel">Fumbles Lost</p>
+                               <p>{this.props.player1.PlayerSeason.FumblesLost}</p>
+                           </div>
+                       </div>
+                    )
+            }
         }
     }
 
@@ -256,7 +299,11 @@ class SelectTeam1 extends Component {
                        zDepth={5}
                        className='cardHolder'
                        onClick={this.checkProps.bind(this)}>
-                    <h1 style={text}>Results Page</h1>
+                    {this.renderPlayerName()}
+                    <br/>
+                    {this.renderPlayerImg()}
+                    <br/>
+                    {this.renderPlayerStats()}
                 </Paper>
             </div>
         )
