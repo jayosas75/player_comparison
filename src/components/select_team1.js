@@ -95,7 +95,7 @@ const playerHeaderText = {
     color: teal600,
     fontSize: '3.0em',
     fontFamily: 'Fantasy, sans-serif',
-}
+};
 
 const dropDownStyle = {
     color: teal600,
@@ -231,21 +231,111 @@ class SelectTeam1 extends Component {
                                <p className="statsLabel">Passing Yards</p>
                                <p>{this.props.player1.PlayerSeason.PassingYards}</p>
                                <p className="statsLabel">Passing Touchdowns</p>
-                               <p>{this.props.player1.PlayerSeason.PassingTouchdowns}</p>
+                               <p>{parseInt(this.props.player1.PlayerSeason.PassingTouchdowns)}</p>
                                <p className="statsLabel">Interceptions</p>
-                               <p>{this.props.player1.PlayerSeason.PassingInterceptions}</p>
+                               <p>{parseInt(this.props.player1.PlayerSeason.PassingInterceptions)}</p>
                            </div>
                            <div className="halfPaper1">
                                <p className="statsLabel">Rushing Yards</p>
                                <p>{this.props.player1.PlayerSeason.RushingYards}</p>
                                <p className="statsLabel">Rushing Touchdowns</p>
-                               <p>{this.props.player1.PlayerSeason.RushingTouchdowns}</p>
+                               <p>{parseInt(this.props.player1.PlayerSeason.RushingTouchdowns)}</p>
                                <p className="statsLabel">Fantasy Points</p>
                                <p>{this.props.player1.PlayerSeason.FantasyPointsPPR}</p>
                                <p className="statsLabel">Fumbles Lost</p>
-                               <p>{this.props.player1.PlayerSeason.FumblesLost}</p>
+                               <p>{parseInt(this.props.player1.PlayerSeason.FumblesLost)}</p>
                            </div>
                        </div>
+                    );
+                case "RB":
+                    return (
+                        <div>
+                            <div className="halfPaper1">
+                                <p className="statsLabel">Rushing Attempts</p>
+                                <p>{parseInt(this.props.player1.PlayerSeason.RushingAttempts)}</p>
+                                <p className="statsLabel">Rushing Yards</p>
+                                <p>{this.props.player1.PlayerSeason.RushingYards}</p>
+                                <p className="statsLabel">Rushing Touchdowns</p>
+                                <p>{parseInt(this.props.player1.PlayerSeason.RushingTouchdowns)}</p>
+                                <p className="statsLabel">Receptions</p>
+                                <p>{parseInt(this.props.player1.PlayerSeason.Receptions)}</p>
+                            </div>
+                            <div className="halfPaper1">
+                                <p className="statsLabel">Receiving Yards</p>
+                                <p>{this.props.player1.PlayerSeason.ReceivingYards}</p>
+                                <p className="statsLabel">Receiving Touchdowns</p>
+                                <p>{parseInt(this.props.player1.PlayerSeason.ReceivingTouchdowns)}</p>
+                                <p className="statsLabel">Fantasy Points</p>
+                                <p>{this.props.player1.PlayerSeason.FantasyPointsPPR}</p>
+                                <p className="statsLabel">Fumbles Lost</p>
+                                <p>{parseInt(this.props.player1.PlayerSeason.FumblesLost)}</p>
+                            </div>
+                        </div>
+                    );
+                case "WR":
+                    return (
+                        <div>
+                            <div className="halfPaper1">
+                                <p className="statsLabel">Targets</p>
+                                <p>{parseInt(this.props.player1.PlayerSeason.ReceivingTargets)}</p>
+                                <p className="statsLabel">Receiving Yards</p>
+                                <p>{this.props.player1.PlayerSeason.ReceivingYards}</p>
+                                <p className="statsLabel">Receiving Touchdowns</p>
+                                <p>{parseInt(this.props.player1.PlayerSeason.ReceivingTouchdowns)}</p>
+                                <p className="statsLabel">Yards Per Reception</p>
+                                <p>{this.props.player1.PlayerSeason.ReceivingYardsPerReception}</p>
+                            </div>
+                            <div className="halfPaper1">
+                                <p className="statsLabel">Receptions</p>
+                                <p>{parseInt(this.props.player1.PlayerSeason.Receptions)}</p>
+                                <p className="statsLabel">Offensive Snaps Played</p>
+                                <p>{parseInt(this.props.player1.PlayerSeason.OffensiveSnapsPlayed)}</p>
+                                <p className="statsLabel">Fantasy Points</p>
+                                <p>{this.props.player1.PlayerSeason.FantasyPointsPPR}</p>
+                                <p className="statsLabel">Fumbles Lost</p>
+                                <p>{parseInt(this.props.player1.PlayerSeason.FumblesLost)}</p>
+                            </div>
+                        </div>
+                    );
+                case "TE":
+                    return (
+                        <div>
+                            <div className="halfPaper1">
+                                <p className="statsLabel">Targets</p>
+                                <p>{parseInt(this.props.player1.PlayerSeason.ReceivingTargets)}</p>
+                                <p className="statsLabel">Receiving Yards</p>
+                                <p>{this.props.player1.PlayerSeason.ReceivingYards}</p>
+                                <p className="statsLabel">Receiving Touchdowns</p>
+                                <p>{parseInt(this.props.player1.PlayerSeason.ReceivingTouchdowns)}</p>
+                                <p className="statsLabel">Yards Per Reception</p>
+                                <p>{this.props.player1.PlayerSeason.ReceivingYardsPerReception}</p>
+                            </div>
+                            <div className="halfPaper1">
+                                <p className="statsLabel">Receptions</p>
+                                <p>{parseInt(this.props.player1.PlayerSeason.Receptions)}</p>
+                                <p className="statsLabel">Offensive Snaps Played</p>
+                                <p>{parseInt(this.props.player1.PlayerSeason.OffensiveSnapsPlayed)}</p>
+                                <p className="statsLabel">Fantasy Points</p>
+                                <p>{this.props.player1.PlayerSeason.FantasyPointsPPR}</p>
+                                <p className="statsLabel">Fumbles Lost</p>
+                                <p>{parseInt(this.props.player1.PlayerSeason.FumblesLost)}</p>
+                            </div>
+                        </div>
+                    )
+                case "K":
+                    return (
+                        <div>
+                            <p className="statsLabel">Field Goal Percentage</p>
+                            <p>{this.props.player1.PlayerSeason.FieldGoalPercentage + '%'}</p>
+                            <p className="statsLabel">40+ Yard Field Goals</p>
+                            <p>{parseInt(this.props.player1.PlayerSeason.FieldGoalsMade40to49)}</p>
+                            <p className="statsLabel">50+ Yard Field Goals</p>
+                            <p>{parseInt(this.props.player1.PlayerSeason.FieldGoalsMade50plus)}</p>
+                            <p className="statsLabel">Extra Points Made</p>
+                            <p>{parseInt(this.props.player1.PlayerSeason.ExtraPointsMade)}</p>
+                            <p className="statsLabel">Fantasy Points</p>
+                            <p>{parseInt(this.props.player1.PlayerSeason.FantasyPointsPPR)}</p>
+                        </div>
                     )
             }
         }
