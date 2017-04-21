@@ -13,6 +13,8 @@ import Snackbar from 'material-ui/Snackbar';
 let chosenTeam = null;
 let chosenPosition = null;
 let submitButtonHit = false;
+let playerClicked = false;
+let player1picked = null;
 
 function showTeamClicked(event) {
     console.log('this is team that was clicked: ', event.target.innerText);
@@ -42,7 +44,7 @@ for (let i = 0; i < 5; i++ ) {
 }
 
 
-const player1 = {
+const showSelection = {
     backgroundColor: 'rgba(50, 50, 50, 0.99)',
     color: teal600,
     height: 600,
@@ -50,6 +52,39 @@ const player1 = {
     margin: 'auto',
     textAlign: 'center',
     display: 'inline-block',
+    fontFamily: 'Roboto, sans-serif',
+};
+
+const hideSelection = {
+    display: 'none',
+    backgroundColor: 'rgba(50, 50, 50, 0.99)',
+    color: teal600,
+    height: 600,
+    width: 525,
+    margin: 'auto',
+    textAlign: 'center',
+    fontFamily: 'Roboto, sans-serif',
+};
+
+const showResults = {
+    backgroundColor: 'rgba(50, 50, 50, 0.99)',
+    color: teal600,
+    height: 600,
+    width: 525,
+    margin: 'auto',
+    textAlign: 'center',
+    display: 'inline-block',
+    fontFamily: 'Roboto, sans-serif',
+};
+
+const hideResults = {
+    backgroundColor: 'rgba(50, 50, 50, 0.99)',
+    color: teal600,
+    height: 600,
+    width: 525,
+    margin: 'auto',
+    textAlign: 'center',
+    display: 'none',
     fontFamily: 'Roboto, sans-serif',
 };
 const player2 = {
@@ -121,6 +156,12 @@ class SelectTeam1 extends Component {
 
     submitTeam(){
         this.displaySnackBar();
+        if(chosenTeam == null){
+            chosenTeam = 'Bears';
+        }
+        if(chosenPosition == null){
+            chosenPosition = 'Quarterback';
+        }
         let values = {
             team: chosenTeam,
             position: chosenPosition
@@ -129,9 +170,14 @@ class SelectTeam1 extends Component {
         submitButtonHit = true;
     }
 
+    submitPlayer(event){
+        console.log('pick player button hit');
+        this.props.getPlayerData(player1picked);
+    }
+
     setPlayerToState(event){
         event.persist();
-        console.log('player\'s ID selected: ', event.target.value)
+        player1picked = event.target.value;
     };
 
     renderPlayers(){
@@ -149,17 +195,25 @@ class SelectTeam1 extends Component {
                     </div>
                 )
             })
-        } else {
-            return;
+        }
+    }
+
+    renderSubmitPlayerButton(){
+        if(submitButtonHit === true){
+            return (
+                <RaisedButton label="Pick Player"
+                              style={buttonMargin}
+                              onTouchTap={this.submitPlayer.bind(this)}/>
+            )
         }
     }
 
     render(){
         return (
             <div className='cardHolder'>
-                <Paper style={player1}
+                <Paper style={this.props.player1 ? hideSelection : showSelection}
                        zDepth={5}
-                       className={this.props.selectedTeam1 !== 'undefined' ? 'show' : 'hidden'}
+                       className='cardHolder'
                        onClick={this.checkProps.bind(this)}>
                     <h1 style={text}>Select</h1>
                     <h1 style={text}>Team and Position</h1>
@@ -185,18 +239,24 @@ class SelectTeam1 extends Component {
                         {positions}
                     </DropDownMenu>
                     <br/>
-                    <RaisedButton label="Go"
+                    <RaisedButton label="Find Player"
                                   style={buttonMargin}
-                                  className={this.props.buttonHidden ? 'buttonHidden' : ''}
                                   onTouchTap={this.submitTeam.bind(this)}/>
                     <br/>
                     {this.renderPlayers()}
+                    {this.renderSubmitPlayerButton()}
                     <Snackbar
                         open={this.state.open}
                         message="Team and Position Submitted, Loading..."
                         autoHideDuration={5000}
                         onRequestClose={this.closeSnackBar}
                     />
+                </Paper>
+                <Paper style={this.props.player1 ? showResults : hideResults}
+                       zDepth={5}
+                       className='cardHolder'
+                       onClick={this.checkProps.bind(this)}>
+                    <h1 style={text}>Results Page</h1>
                 </Paper>
             </div>
         )
@@ -209,8 +269,6 @@ function mapStateToProps(state){
         selectedTeam2: state.playerData.selectedTeam2,
         player1: state.playerData.player1,
         player2: state.playerData.player2,
-        buttonHidden: state.playerData.buttonHidden,
-        open: false,
     }
 }
 

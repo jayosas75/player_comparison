@@ -1,4 +1,4 @@
-import {FETCH_TEAM_PLAYERS1} from '../actions/types';
+import {FETCH_TEAM_PLAYERS1, SET_PLAYER1} from '../actions/types';
 
 
 function playerData(state = {}, action){
@@ -7,7 +7,11 @@ function playerData(state = {}, action){
             return {
                 ...state,
                 selectedTeam1: action.payload,
-                buttonHidden: true,
+            };
+        case SET_PLAYER1:
+            return {
+                ...state,
+                player1: action.payload
             };
         default:
             return state;

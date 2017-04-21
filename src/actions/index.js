@@ -1,11 +1,25 @@
 import axios from 'axios';
-import { FETCH_TEAM_PLAYERS1 } from './types';
+import { FETCH_TEAM_PLAYERS1, SET_PLAYER1 } from './types';
 import {browserHistory} from 'react-router';
 
 const BASE_URL = 'https://api.fantasydata.net/v3/nfl/stats/JSON/';
 const API_KEY = {
     headers: {'Ocp-Apim-Subscription-Key': 'f3db805d5d56499eb11e3aa08864614f'}
 };
+
+export function getPlayerData(playerID){
+    return function(dispatch){
+        axios.get(`${BASE_URL}PlayerSeasonStatsByPlayerID/2016REG/${playerID}`, API_KEY).then(resp => {
+            console.log('player back from DB', resp.data);
+            dispatch({
+                type: SET_PLAYER1,
+                payload: resp.data
+            });
+        }).catch((err) => {
+            dispatch('error');
+        })
+    }
+}
 
 export function fetch_team_players1(values){
     let teamID = null;
@@ -20,7 +34,7 @@ export function fetch_team_players1(values){
         case 'Wide receiver':
             position = 'WR';
             break;
-        case 'Tight End':
+        case 'Tight end':
             position = 'TE';
             break;
         case 'Kicker':
