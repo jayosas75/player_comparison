@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_TEAM_PLAYERS1, SET_PLAYER1 } from './types';
+import { FETCH_TEAM_PLAYERS1, SET_PLAYER1, SHOW_SNACKBAR, HIDE_SNACKBAR, } from './types';
 import {browserHistory} from 'react-router';
 
 const BASE_URL = 'https://api.fantasydata.net/v3/nfl/stats/JSON/';
@@ -7,17 +7,28 @@ const API_KEY = {
     headers: {'Ocp-Apim-Subscription-Key': 'f3db805d5d56499eb11e3aa08864614f'}
 };
 
-export function getPlayerData(playerID){
+export function showSnackBar(){
     return function(dispatch){
-        axios.get(`${BASE_URL}Player/${playerID}`, API_KEY).then(resp => {
-            console.log('player back from DB', resp.data);
+        dispatch({
+            type: SHOW_SNACKBAR
+        })
+    }
+}
+export function hideSnackBar(){
+    return function(dispatch){
+        dispatch({
+            type: HIDE_SNACKBAR
+        })
+    }
+}
+
+export function getPlayerData(playerObj){
+    return function(dispatch){
             dispatch({
                 type: SET_PLAYER1,
-                payload: resp.data
+                payload: playerObj
             });
-        }).catch((err) => {
-            dispatch('error');
-        })
+            console.log('player should be in state/props, ccheck it');
     }
 }
 

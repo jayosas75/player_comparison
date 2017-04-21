@@ -116,8 +116,7 @@ class SelectTeam1 extends Component {
     constructor(props) {
         super(props);
         this.state = {valueTeam: 'Bears',
-                      valuePosition: 'Quarterback',
-                      open: false};
+                      valuePosition: 'Quarterback'};
     }
 
     handleTeamChange = (event, index, valueTeam) => this.setState({valueTeam});
@@ -127,37 +126,38 @@ class SelectTeam1 extends Component {
         console.log(this.props);
     }
 
-    displaySnackBar(){
-        this.setState ({
-            open: true
-        });
-    }
-
     closeSnackBar = () => {
-        this.setState({
-            open: false,
-        });
+        this.props.hideSnackBar();
     };
 
     submitTeam(){
-        this.displaySnackBar();
-        if(chosenTeam == null){
-            chosenTeam = 'Bears';
-        }
-        if(chosenPosition == null){
-            chosenPosition = 'Quarterback';
-        }
-        let values = {
-            team: chosenTeam,
-            position: chosenPosition
-        };
-        this.props.fetch_team_players1(values);
-        submitButtonHit = true;
+        this.props.showSnackBar();
+        setTimeout(() => {
+            if(chosenTeam == null){
+                chosenTeam = 'Bears';
+            }
+            if(chosenPosition == null){
+                chosenPosition = 'Quarterback';
+            }
+            let values = {
+                team: chosenTeam,
+                position: chosenPosition
+            };
+            this.props.fetch_team_players1(values);
+            submitButtonHit = true;
+        }, 1000);
     }
 
-    submitPlayer(event){
-        console.log('pick player button hit');
-        this.props.getPlayerData(player1Info);
+    submitPlayer(){
+        this.props.showSnackBar();
+        setTimeout(() => {
+            for(let i = 0; i < this.props.selectedTeam1.length; i++){
+                if(this.props.selectedTeam1[i].PlayerID == player1Info){
+                    this.props.getPlayerData(this.props.selectedTeam1[i]);
+                }
+            }
+        }, 2000);
+
     }
 
     setPlayerToState(event){
@@ -227,7 +227,7 @@ class SelectTeam1 extends Component {
                        <div>
                            <div className="halfPaper1">
                                <p className="statsLabel">Completion Percentage</p>
-                               <p>{this.props.player1.PlayerSeason.PassingCompletionPercentage}</p>
+                               <p>{this.props.player1.PlayerSeason.PassingCompletionPercentage + '%'}</p>
                                <p className="statsLabel">Passing Yards</p>
                                <p>{this.props.player1.PlayerSeason.PassingYards}</p>
                                <p className="statsLabel">Passing Touchdowns</p>
@@ -372,18 +372,19 @@ class SelectTeam1 extends Component {
                         {positions}
                     </DropDownMenu>
                     <br/>
+                    <Snackbar
+                        open={this.props.open}
+                        message="Specifications Submitted, Loading..."
+                        autoHideDuration={5000}
+                        onRequestClose={this.closeSnackBar}
+                    />
                     <RaisedButton label="Find Player"
                                   style={buttonMargin}
                                   onTouchTap={this.submitTeam.bind(this)}/>
                     <br/>
                     {this.renderPlayers()}
                     {this.renderSubmitPlayerButton()}
-                    <Snackbar
-                        open={this.state.open}
-                        message="Team and Position Submitted, Loading..."
-                        autoHideDuration={5000}
-                        onRequestClose={this.closeSnackBar}
-                    />
+
                 </Paper>
                 <Paper style={this.props.player1 ? showResults : hideResults}
                        zDepth={5}
@@ -406,6 +407,7 @@ function mapStateToProps(state){
         selectedTeam2: state.playerData.selectedTeam2,
         player1: state.playerData.player1,
         player2: state.playerData.player2,
+        open: state.playerData.open,
     }
 }
 

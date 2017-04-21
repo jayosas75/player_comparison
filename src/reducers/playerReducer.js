@@ -1,7 +1,9 @@
-import {FETCH_TEAM_PLAYERS1, SET_PLAYER1} from '../actions/types';
+import {FETCH_TEAM_PLAYERS1, SET_PLAYER1, SHOW_SNACKBAR, HIDE_SNACKBAR} from '../actions/types';
 
 
-function playerData(state = {}, action){
+function playerData(state = {
+    open: false
+}, action){
     switch(action.type){
         case FETCH_TEAM_PLAYERS1:
             return {
@@ -12,6 +14,16 @@ function playerData(state = {}, action){
             return {
                 ...state,
                 player1: action.payload
+            };
+        case SHOW_SNACKBAR:
+            return {
+                ...state,
+                open: true
+            };
+        case HIDE_SNACKBAR:
+            return {
+                ...state,
+                open: false
             };
         default:
             return state;
