@@ -14,23 +14,19 @@ let submitButtonHit = false;
 let player1Info = null;
 let selectedPlayer1 = false;
 
-function showTeamClicked(event) {
-    console.log('this is team that was clicked: ', event.target.innerText);
-    chosenTeam = event.target.innerText;
-}
-function showPositionClicked(event) {
-    console.log('this is position that was clicked: ', event.target.innerText);
-    chosenPosition = event.target.innerText;
-}
-
 const teams = [];
-
 const NFLteams = ['Bears','Bengals','Bills','Broncos','Browns','Buccaneers','Colts','Cardinals','Chargers','Chiefs',
     'Cowboys','Dolphins','Eagles','Falcons','Giants','Jaguars','Jets', 'Lions','Packers','Panthers','Patriots','Redskins',
     'Raiders','Rams','Ravens','Saints','Seahawks','Steelers','Texans','Titans','Vikings','49ers'];
-
 for (let i = 0; i < 31; i++ ) {
     teams.push(<MenuItem value={NFLteams[i]} key={i} primaryText={`${NFLteams[i]}`} onTouchTap={showTeamClicked.bind(this)} />);
+}
+
+function showTeamClicked(event) {
+    chosenTeam = event.target.innerText;
+}
+function showPositionClicked(event) {
+    chosenPosition = event.target.innerText;
 }
 
 const positions = [];
@@ -126,10 +122,6 @@ class SelectTeam1 extends Component {
 
     handleTeamChange = (event, index, valueTeam) => this.setState({valueTeam});
     handlePositionChange = (event, index, valuePosition) => this.setState({valuePosition});
-
-    checkProps(){
-        console.log(this.props);
-    }
 
     closeSnackBar = () => {
         this.props.hideSnackBar();

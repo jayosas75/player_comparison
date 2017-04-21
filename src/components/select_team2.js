@@ -131,10 +131,6 @@ class SelectTeam2 extends Component {
     handleTeamChange = (event, index, valueTeam) => this.setState({valueTeam});
     handlePositionChange = (event, index, valuePosition) => this.setState({valuePosition});
 
-    checkProps(){
-        console.log(this.props);
-    }
-
     closeSnackBar = () => {
         this.props.hideSnackBar();
     };
