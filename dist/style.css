@@ -53,3 +53,11 @@
     text-decoration: underline;
     color: white;
 }
+.otherStatsLabel {
+    text-decoration: underline;
+    color: black;
+}
+.inputPosition {
+    width: 50%;
+    display: inline-block;
+}

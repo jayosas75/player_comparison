@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
-import {teal600} from 'material-ui/styles/colors';
+import {lightBlue900} from 'material-ui/styles/colors';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import { connect } from 'react-redux';
@@ -26,7 +26,7 @@ function showPositionClicked(event) {
 const teams = [];
 
 const NFLteams = ['Bears','Bengals','Bills','Broncos','Browns','Buccaneers','Colts','Cardinals','Chargers','Chiefs',
-    'Cowboys','Dolphins','Eagles','Falcons','Giants','Jaguars','Lions','Packers','Panthers','Patriots','Redskins',
+    'Cowboys','Dolphins','Eagles','Falcons','Giants','Jaguars','Jets', 'Lions','Packers','Panthers','Patriots','Redskins',
     'Raiders','Rams','Ravens','Saints','Seahawks','Steelers','Texans','Titans','Vikings','49ers'];
 
 for (let i = 0; i < 31; i++ ) {
@@ -43,8 +43,8 @@ for (let i = 0; i < 5; i++ ) {
 
 
 const showSelection = {
-    backgroundColor: 'rgba(50, 50, 50, 0.99)',
-    color: teal600,
+    backgroundColor: 'lightgrey',
+    color: lightBlue900,
     height: 600,
     width: 525,
     margin: 'auto',
@@ -55,8 +55,8 @@ const showSelection = {
 
 const hideSelection = {
     display: 'none',
-    backgroundColor: 'rgba(50, 50, 50, 0.99)',
-    color: teal600,
+    backgroundColor: 'lightgrey',
+    color: lightBlue900,
     height: 600,
     width: 525,
     margin: 'auto',
@@ -65,8 +65,8 @@ const hideSelection = {
 };
 
 const showResults = {
-    backgroundColor: 'rgba(50, 50, 50, 0.99)',
-    color: teal600,
+    backgroundColor: 'lightgrey',
+    color: lightBlue900,
     height: 600,
     width: 525,
     margin: 'auto',
@@ -76,8 +76,8 @@ const showResults = {
 };
 
 const hideResults = {
-    backgroundColor: 'rgba(50, 50, 50, 0.99)',
-    color: teal600,
+    backgroundColor: 'lightgrey',
+    color: lightBlue900,
     height: 600,
     width: 525,
     margin: 'auto',
@@ -87,18 +87,19 @@ const hideResults = {
 };
 
 const text ={
-    color: teal600,
+    color: 'white',
     fontSize: '2em',
 };
 
 const playerHeaderText = {
-    color: teal600,
+    color: lightBlue900,
     fontSize: '3.0em',
     fontFamily: 'Fantasy, sans-serif',
+    textDecoration: 'underline'
 };
 
 const dropDownStyle = {
-    color: teal600,
+    color: lightBlue900,
     customWidth: {
         width: 300,
         color: 'white',
@@ -106,10 +107,14 @@ const dropDownStyle = {
 };
 
 const buttonMargin = {
-    margin: 12,
+    display: 'block',
+    margin: 'auto',
+    maxWidth: 130
 };
 
-
+const selectedMenuItemStyle = {
+    color: lightBlue900,
+};
 
 class SelectTeam1 extends Component {
 
@@ -153,7 +158,7 @@ class SelectTeam1 extends Component {
         setTimeout(() => {
             for(let i = 0; i < this.props.selectedTeam1.length; i++){
                 if(this.props.selectedTeam1[i].PlayerID == player1Info){
-                    this.props.getPlayerData(this.props.selectedTeam1[i]);
+                    this.props.getPlayerData1(this.props.selectedTeam1[i]);
                 }
             }
         }, 2000);
@@ -170,13 +175,14 @@ class SelectTeam1 extends Component {
         if(submitButtonHit === true){
             return this.props.selectedTeam1.map(player => {
                 return (
-                    <div key={player.PlayerID}>
+                    <div key={player.PlayerID} className="inputPosition">
                         <input type="radio" className="inline-block center"
                                name='player'
+                               id={player.Name}
                                value={player.PlayerID}
                                onClick={this.setPlayerToState.bind(this)}>
                         </input>
-                        <label htmlFor='player'>{player.Name}</label>
+                        <label htmlFor={player.Name}>{player.Name}</label>
                         <br/>
                     </div>
                 )
@@ -189,6 +195,7 @@ class SelectTeam1 extends Component {
                 return (
                     <RaisedButton label="Pick Player"
                                   style={buttonMargin}
+                                  primary={true}
                                   onTouchTap={this.submitPlayer.bind(this)}/>
                 )
             }
@@ -356,8 +363,10 @@ class SelectTeam1 extends Component {
                                   value={this.state.valueTeam}
                                   onChange={this.handleTeamChange}
                                   autoWidth={false}
-                                  labelStyle={{ color: teal600 }}
+                                  labelStyle={{ color: lightBlue900 }}
                                   className="toggleButton1"
+                                  selectedMenuItemStyle={selectedMenuItemStyle}
+                                  animated={true}
                      >
                         {teams}
                 </DropDownMenu>
@@ -367,7 +376,9 @@ class SelectTeam1 extends Component {
                                   value={this.state.valuePosition}
                                   onChange={this.handlePositionChange}
                                   autoWidth={false}
-                                  labelStyle={{ color: teal600 }}
+                                  labelStyle={{ color: lightBlue900 }}
+                                  selectedMenuItemStyle={selectedMenuItemStyle}
+                                  animated={true}
                     >
                         {positions}
                     </DropDownMenu>
@@ -380,6 +391,7 @@ class SelectTeam1 extends Component {
                     />
                     <RaisedButton label="Find Player"
                                   style={buttonMargin}
+                                  primary={true}
                                   onTouchTap={this.submitTeam.bind(this)}/>
                     <br/>
                     {this.renderPlayers()}

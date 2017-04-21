@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
-import {teal600} from 'material-ui/styles/colors';
+import {lightBlue900} from 'material-ui/styles/colors';
 import FlatButton from 'material-ui/FlatButton';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Menu from 'material-ui/svg-icons/navigation/menu';
 import * as actions from '../actions';
 
 const toolbarStyle = {
     toolbar: {
-        backgroundColor: teal600,
+        backgroundColor: lightBlue900,
         boxShadow: '0px 1px 9px 0px rgba(0,0,0,0.75)',
         height: '60px'
     },
