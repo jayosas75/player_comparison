@@ -13,7 +13,6 @@ let chosenTeam = null;
 let chosenPosition = null;
 let submitButtonHit = false;
 let player1Info = null;
-let selectedPlayer1 = false;
 
 //drop down items for material-ui dropdown
 const teams = [];
@@ -92,21 +91,24 @@ const selectedMenuItemStyle = {
     color: lightBlue900,
 };
 
+//constructor for Component 1 to select first player
 class SelectTeam1 extends Component {
-
     constructor(props) {
         super(props);
         this.state = {valueTeam: 'Bears',
                       valuePosition: 'Quarterback'};
     }
 
+    //functions to set value selected from drop down menus
     handleTeamChange = (event, index, valueTeam) => this.setState({valueTeam});
     handlePositionChange = (event, index, valuePosition) => this.setState({valuePosition});
 
+    //function to change state so snackbar will close
     closeSnackBar = () => {
         this.props.hideSnackBar();
     };
 
+    //functions to submit team to database and to find player selected by playerID
     submitTeam(){
         this.props.showSnackBar();
         setTimeout(() => {
@@ -140,9 +142,9 @@ class SelectTeam1 extends Component {
     setPlayerToState(event){
         event.persist();
         player1Info = event.target.value;
-        selectedPlayer1 = true;
     };
 
+    //function to populate player list of selected team and position as well as button to move onto result.
     renderPlayers(){
         if(submitButtonHit === true){
             return this.props.selectedTeam1.map(player => {
