@@ -8,12 +8,14 @@ import * as actions from '../actions';
 import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
 
+//globals to keep track of teams and players selected
 let chosenTeam = null;
 let chosenPosition = null;
 let submitButtonHit = false;
 let player1Info = null;
 let selectedPlayer1 = false;
 
+//drop down items for material-ui dropdown
 const teams = [];
 const NFLteams = ['Bears','Bengals','Bills','Broncos','Browns','Buccaneers','Colts','Cardinals','Chargers','Chiefs',
     'Cowboys','Dolphins','Eagles','Falcons','Giants','Jaguars','Jets', 'Lions','Packers','Panthers','Patriots','Redskins',
@@ -25,24 +27,23 @@ for (let i = 0; i < 31; i++ ) {
 function showTeamClicked(event) {
     chosenTeam = event.target.innerText;
 }
+
+const positions = [];
+const NFLPositions = ['Quarterback', 'Running back', 'Wide receiver', 'Tight end', 'Kicker'];
+for (let i = 0; i < 5; i++ ) {
+    positions.push(<MenuItem value={NFLPositions[i]} key={i} primaryText={`${NFLPositions[i]}`} onTouchTap={showPositionClicked.bind(this)} />);
+}
 function showPositionClicked(event) {
     chosenPosition = event.target.innerText;
 }
 
-const positions = [];
-
-const NFLPositions = ['Quarterback', 'Running back', 'Wide receiver', 'Tight end', 'Kicker'];
-
-for (let i = 0; i < 5; i++ ) {
-    positions.push(<MenuItem value={NFLPositions[i]} key={i} primaryText={`${NFLPositions[i]}`} onTouchTap={showPositionClicked.bind(this)} />);
-}
-
-
+//styles and display settings for material-ui paper, buttons, and dropdown menu
 const showSelection = {
     backgroundColor: 'lightgrey',
     color: lightBlue900,
     height: 600,
-    width: 525,
+    minWidth: 300,
+    maxWidth: 525,
     margin: 'auto',
     textAlign: 'center',
     display: 'inline-block',
@@ -50,32 +51,11 @@ const showSelection = {
 };
 
 const hideSelection = {
-    display: 'none',
     backgroundColor: 'lightgrey',
     color: lightBlue900,
     height: 600,
-    width: 525,
-    margin: 'auto',
-    textAlign: 'center',
-    fontFamily: 'Roboto, sans-serif',
-};
-
-const showResults = {
-    backgroundColor: 'lightgrey',
-    color: lightBlue900,
-    height: 600,
-    width: 525,
-    margin: 'auto',
-    textAlign: 'center',
-    display: 'inline-block',
-    fontFamily: 'Roboto, sans-serif',
-};
-
-const hideResults = {
-    backgroundColor: 'lightgrey',
-    color: lightBlue900,
-    height: 600,
-    width: 525,
+    minWidth: 375,
+    maxWidth: 525,
     margin: 'auto',
     textAlign: 'center',
     display: 'none',
@@ -345,8 +325,7 @@ class SelectTeam1 extends Component {
             <div className='cardHolder'>
                 <Paper style={this.props.player1 ? hideSelection : showSelection}
                        zDepth={5}
-                       className='cardHolder'
-                       onClick={this.checkProps.bind(this)}>
+                       className='cardHolder'>
                     <h1 style={text}>Select</h1>
                     <h1 style={text}>Team and Position</h1>
                     <h1 style={text}>of Player 1</h1>
@@ -390,10 +369,9 @@ class SelectTeam1 extends Component {
                     {this.renderSubmitPlayerButton()}
 
                 </Paper>
-                <Paper style={this.props.player1 ? showResults : hideResults}
+                <Paper style={this.props.player1 ? showSelection : hideSelection}
                        zDepth={5}
-                       className='cardHolder'
-                       onClick={this.checkProps.bind(this)}>
+                       className='cardHolder'>
                     {this.renderPlayerName()}
                     <br/>
                     {this.renderPlayerImg()}

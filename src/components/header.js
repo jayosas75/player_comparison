@@ -3,12 +3,11 @@ import { Link } from 'react-router';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 import {lightBlue900} from 'material-ui/styles/colors';
 import FlatButton from 'material-ui/FlatButton';
-import { connect } from 'react-redux';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import Menu from 'material-ui/svg-icons/navigation/menu';
-import * as actions from '../actions';
+
 
 const toolbarStyle = {
     toolbar: {
@@ -38,29 +37,15 @@ const toolbarStyle = {
 
 class Header extends Component {
 
-
-   /* componentWillMount(){
-        if(this.props.authenticated){
-            return;
-        } else if(this.props.active_client === undefined){
-            this.props.handleProfileClick();
-        }
-    }*/
-
-   //hi
-
-
     render(){
         return (
             <div>
                 <div key='signin3' className='headerToolbarWide'>
                     <Toolbar style={toolbarStyle.toolbar} >
                         <ToolbarGroup firstChild={true}>
-                            <Link to="/" ><ToolbarTitle style={toolbarStyle.titleWide} text="NFL Player Comparison" /></Link>
+                           <ToolbarTitle style={toolbarStyle.titleWide} text="Compare NFL Players" />
                         </ToolbarGroup>
                         <ToolbarGroup>
-                            <ToolbarSeparator/>
-                            <FlatButton label="Find Player" default={true} style={toolbarStyle.signinButton}/>
                             <ToolbarSeparator/>
                             <FlatButton label="How to Use" secondary={true} style={toolbarStyle.signinButton}/>
                         </ToolbarGroup>
@@ -69,7 +54,7 @@ class Header extends Component {
                 <div key='signin1' className='headerToolbarShort'>
                     <Toolbar style={toolbarStyle.toolbar}>
                         <ToolbarGroup firstChild={true}>
-                            <Link to="/"><ToolbarTitle style={toolbarStyle.titleShort} text="NFL Player Comparison"/></Link>
+                           <ToolbarTitle style={toolbarStyle.titleShort} text="Compare Players"/>
                         </ToolbarGroup>
                         <ToolbarGroup>
                             <IconMenu
@@ -77,8 +62,6 @@ class Header extends Component {
                                 anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                                 targetOrigin={{horizontal: 'right', vertical: 'top'}}
                             >
-                                <MenuItem primaryText="Home"/>
-                                <MenuItem primaryText="Find Player"/>
                                 <MenuItem primaryText="How To Use"/>
                             </IconMenu>
                         </ToolbarGroup>
@@ -89,13 +72,4 @@ class Header extends Component {
     }
 }
 
-function mapStateToProps(state){
-    return {
-        /*authenticated: state.authReducer.authenticated,
-        active_client: state.coupleData.active_client,
-        active_planner: state.plannerData*/
-    }
-}
-
-
-export default connect(mapStateToProps, actions)(Header);
+export default Header;

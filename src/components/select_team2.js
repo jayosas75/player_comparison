@@ -47,7 +47,8 @@ const showSelection = {
     float: 'right',
     color: lightBlue900,
     height: 600,
-    width: 525,
+    minWidth: 300,
+    maxWidth: 525,
     margin: 'auto',
     textAlign: 'center',
     display: 'inline-block',
@@ -60,7 +61,8 @@ const hideSelection = {
     float: 'right',
     color: lightBlue900,
     height: 600,
-    width: 525,
+    wminWidth: 300,
+    maxWidth: 525,
     margin: 'auto',
     textAlign: 'center',
     fontFamily: 'Roboto, sans-serif',
@@ -352,8 +354,7 @@ class SelectTeam2 extends Component {
             <div className='cardHolder'>
                 <Paper style={this.props.player2 ? hideSelection : showSelection}
                        zDepth={5}
-                       className='cardHolder'
-                       onClick={this.checkProps.bind(this)}>
+                       className='cardHolder'>
                     <h1 style={text}>Select</h1>
                     <h1 style={text}>Team and Position</h1>
                     <h1 style={text}>of Player 2</h1>
@@ -397,8 +398,7 @@ class SelectTeam2 extends Component {
                 </Paper>
                 <Paper style={this.props.player2 ? showResults : hideResults}
                        zDepth={5}
-                       className='cardHolder'
-                       onClick={this.checkProps.bind(this)}>
+                       className='cardHolder'>
                     {this.renderPlayerName()}
                     <br/>
                     {this.renderPlayerImg()}

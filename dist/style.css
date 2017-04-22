@@ -1,20 +1,10 @@
+#root {
+    background-color: gray;
+    margin: auto;
+}
+
 .headerToolbarShort {
     display: none;
-}
-@media only screen and (max-width: 590px) {
-
-    .app {
-        margin-top: 30px;
-    }
-
-    .headerToolbarWide {
-        display: none;
-    }
-
-    .headerToolbarShort {
-        display: inline;
-    }
-
 }
 
 .cardHolder {
@@ -60,4 +50,24 @@
 .inputPosition {
     width: 50%;
     display: inline-block;
+}
+
+@media only screen and (max-width: 590px) {
+
+    .app {
+        margin-top: 30px;
+    }
+
+    .headerToolbarWide {
+        display: none;
+    }
+
+    .headerToolbarShort {
+        display: inline;
+    }
+
+    .cardHolder {
+        display: inline;
+    }
+
 }
