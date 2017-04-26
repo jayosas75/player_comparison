@@ -8,40 +8,35 @@ import * as actions from '../actions';
 import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
 
+//globals to keep track of teams and players selected
 let chosenTeam = null;
 let chosenPosition = null;
 let submitButtonHit = false;
-let player2Info = null;
-let selectedPlayer2 = false;
+let player2info = null;
 
-function showTeamClicked(event) {
-    console.log('this is team that was clicked: ', event.target.innerText);
-    chosenTeam = event.target.innerText;
-}
-function showPositionClicked(event) {
-    console.log('this is position that was clicked: ', event.target.innerText);
-    chosenPosition = event.target.innerText;
-}
-
+//drop down items for material-ui dropdown
 const teams = [];
-
 const NFLteams = ['Bears','Bengals','Bills','Broncos','Browns','Buccaneers','Colts','Cardinals','Chargers','Chiefs',
-    'Cowboys','Dolphins','Eagles','Falcons','Giants','Jaguars','Jets','Lions','Packers','Panthers','Patriots','Redskins',
+    'Cowboys','Dolphins','Eagles','Falcons','Giants','Jaguars','Jets', 'Lions','Packers','Panthers','Patriots','Redskins',
     'Raiders','Rams','Ravens','Saints','Seahawks','Steelers','Texans','Titans','Vikings','49ers'];
-
 for (let i = 0; i < 31; i++ ) {
     teams.push(<MenuItem value={NFLteams[i]} key={i} primaryText={`${NFLteams[i]}`} onTouchTap={showTeamClicked.bind(this)} />);
 }
 
+function showTeamClicked(event) {
+    chosenTeam = event.target.innerText;
+}
+
 const positions = [];
-
 const NFLPositions = ['Quarterback', 'Running back', 'Wide receiver', 'Tight end', 'Kicker'];
-
 for (let i = 0; i < 5; i++ ) {
     positions.push(<MenuItem value={NFLPositions[i]} key={i} primaryText={`${NFLPositions[i]}`} onTouchTap={showPositionClicked.bind(this)} />);
 }
+function showPositionClicked(event) {
+    chosenPosition = event.target.innerText;
+}
 
-
+//styles and display settings for material-ui paper, buttons, and dropdown menu
 const showSelection = {
     backgroundColor: 'white',
     float: 'right',
@@ -56,36 +51,12 @@ const showSelection = {
 };
 
 const hideSelection = {
-    display: 'none',
     backgroundColor: 'white',
     float: 'right',
     color: lightBlue900,
     height: 600,
-    wminWidth: 300,
+    minWidth: 375,
     maxWidth: 525,
-    margin: 'auto',
-    textAlign: 'center',
-    fontFamily: 'Roboto, sans-serif',
-};
-
-const showResults = {
-    backgroundColor: 'white',
-    float: 'right',
-    color: lightBlue900,
-    height: 600,
-    width: 525,
-    margin: 'auto',
-    textAlign: 'center',
-    display: 'inline-block',
-    fontFamily: 'Roboto, sans-serif',
-};
-
-const hideResults = {
-    backgroundColor: 'white',
-    float: 'right',
-    color: lightBlue900,
-    height: 600,
-    width: 525,
     margin: 'auto',
     textAlign: 'center',
     display: 'none',
@@ -122,21 +93,24 @@ const selectedMenuItemStyle = {
     color: lightBlue900,
 };
 
+//constructor for Component 1 to select first player
 class SelectTeam2 extends Component {
-
     constructor(props) {
         super(props);
         this.state = {valueTeam: 'Bears',
             valuePosition: 'Quarterback'};
     }
 
+    //functions to set value selected from drop down menus
     handleTeamChange = (event, index, valueTeam) => this.setState({valueTeam});
     handlePositionChange = (event, index, valuePosition) => this.setState({valuePosition});
 
+    //function to change state so snackbar will close
     closeSnackBar = () => {
         this.props.hideSnackBar();
     };
 
+    //functions to submit team to database and to find player selected by playerID
     submitTeam(){
         this.props.showSnackBar();
         setTimeout(() => {
@@ -159,7 +133,7 @@ class SelectTeam2 extends Component {
         this.props.showSnackBar();
         setTimeout(() => {
             for(let i = 0; i < this.props.selectedTeam2.length; i++){
-                if(this.props.selectedTeam2[i].PlayerID == player2Info){
+                if(this.props.selectedTeam2[i].PlayerID == player2info){
                     this.props.getPlayerData2(this.props.selectedTeam2[i]);
                 }
             }
@@ -169,10 +143,10 @@ class SelectTeam2 extends Component {
 
     setPlayerToState(event){
         event.persist();
-        player2Info = event.target.value;
-        selectedPlayer2 = true;
+        player2info = event.target.value;
     };
 
+    //function to populate player list of selected team and position as well as button to move onto result.
     renderPlayers(){
         if(submitButtonHit === true){
             return this.props.selectedTeam2.map(player => {
@@ -203,6 +177,7 @@ class SelectTeam2 extends Component {
         }
     };
 
+    //handles displaying players name at the top of each main div
     renderPlayerName(){
         if(this.props.player2){
             return (
@@ -215,6 +190,7 @@ class SelectTeam2 extends Component {
         }
     }
 
+    //img to display underneath player name. will be implemented soon.
     renderPlayerImg(){
         setTimeout(() => {
             if(this.props.player2){
@@ -227,6 +203,7 @@ class SelectTeam2 extends Component {
         }, 5000);
     }
 
+    //player stats that will be displayed under players image
     renderPlayerStats(){
         if(this.props.player2){
             switch(this.props.player2.Position){
@@ -329,7 +306,7 @@ class SelectTeam2 extends Component {
                                 <p>{parseInt(this.props.player2.PlayerSeason.FumblesLost)}</p>
                             </div>
                         </div>
-                    )
+                    );
                 case "K":
                     return (
                         <div>
@@ -349,6 +326,7 @@ class SelectTeam2 extends Component {
         }
     }
 
+    //all that will be rendered onto component
     render(){
         return (
             <div className='cardHolder'>
@@ -357,7 +335,7 @@ class SelectTeam2 extends Component {
                        className='cardHolder'>
                     <h1 style={text}>Select</h1>
                     <h1 style={text}>Team and Position</h1>
-                    <h1 style={text}>of Player 2</h1>
+                    <h1 style={text}>of Player 1</h1>
                     <DropDownMenu style={dropDownStyle.customWidth}
                                   maxHeight={300}
                                   value={this.state.valueTeam}
@@ -366,6 +344,7 @@ class SelectTeam2 extends Component {
                                   labelStyle={{ color: lightBlue900 }}
                                   className="toggleButton1"
                                   selectedMenuItemStyle={selectedMenuItemStyle}
+                                  animated={true}
                     >
                         {teams}
                     </DropDownMenu>
@@ -377,6 +356,7 @@ class SelectTeam2 extends Component {
                                   autoWidth={false}
                                   labelStyle={{ color: lightBlue900 }}
                                   selectedMenuItemStyle={selectedMenuItemStyle}
+                                  animated={true}
                     >
                         {positions}
                     </DropDownMenu>
@@ -388,15 +368,15 @@ class SelectTeam2 extends Component {
                         onRequestClose={this.closeSnackBar}
                     />
                     <RaisedButton label="Find Player"
-                                  primary={true}
                                   style={buttonMargin}
+                                  primary={true}
                                   onTouchTap={this.submitTeam.bind(this)}/>
                     <br/>
                     {this.renderPlayers()}
                     {this.renderSubmitPlayerButton()}
 
                 </Paper>
-                <Paper style={this.props.player2 ? showResults : hideResults}
+                <Paper style={this.props.player2 ? showSelection : hideSelection}
                        zDepth={5}
                        className='cardHolder'>
                     {this.renderPlayerName()}
@@ -410,6 +390,7 @@ class SelectTeam2 extends Component {
     }
 }
 
+//connect current state of app to props for exported functions
 function mapStateToProps(state){
     return {
         selectedTeam1: state.playerData.selectedTeam1,

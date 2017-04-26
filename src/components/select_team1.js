@@ -175,6 +175,7 @@ class SelectTeam1 extends Component {
             }
     };
 
+    //handles displaying players name at the top of each main div
     renderPlayerName(){
         if(this.props.player1){
             return (
@@ -187,6 +188,7 @@ class SelectTeam1 extends Component {
         }
     }
 
+    //img to display underneath player name. will be implemented soon.
     renderPlayerImg(){
         setTimeout(() => {
             if(this.props.player1){
@@ -200,6 +202,7 @@ class SelectTeam1 extends Component {
         }, 5000);
     }
 
+    //player stats that will be displayed under players image
     renderPlayerStats(){
         if(this.props.player1){
             switch(this.props.player1.Position){
@@ -302,7 +305,7 @@ class SelectTeam1 extends Component {
                                 <p>{parseInt(this.props.player1.PlayerSeason.FumblesLost)}</p>
                             </div>
                         </div>
-                    )
+                    );
                 case "K":
                     return (
                         <div>
@@ -322,6 +325,7 @@ class SelectTeam1 extends Component {
         }
     }
 
+    //all that will be rendered onto component
     render(){
         return (
             <div className='cardHolder'>
@@ -385,6 +389,7 @@ class SelectTeam1 extends Component {
     }
 }
 
+//connect current state of app to props for exported functions
 function mapStateToProps(state){
     return {
         selectedTeam1: state.playerData.selectedTeam1,
