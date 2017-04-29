@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import SelectTeam1 from '../components/select_team1';

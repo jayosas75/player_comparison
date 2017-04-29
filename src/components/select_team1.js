@@ -229,6 +229,9 @@ class SelectTeam1 extends Component {
                                <p className="statsLabel">Fumbles Lost</p>
                                <p>{parseInt(this.props.player1.PlayerSeason.FumblesLost)}</p>
                            </div>
+                           <RaisedButton label="Choose Another Player"
+                                         style={buttonMargin}
+                                         primary={true}/>
                        </div>
                     );
                 case "RB":
@@ -254,6 +257,9 @@ class SelectTeam1 extends Component {
                                 <p className="statsLabel">Fumbles Lost</p>
                                 <p>{parseInt(this.props.player1.PlayerSeason.FumblesLost)}</p>
                             </div>
+                            <RaisedButton label="Choose Another Player"
+                                          style={buttonMargin}
+                                          primary={true}/>
                         </div>
                     );
                 case "WR":
@@ -272,13 +278,16 @@ class SelectTeam1 extends Component {
                             <div className="halfPaper1">
                                 <p className="statsLabel">Receptions</p>
                                 <p>{parseInt(this.props.player1.PlayerSeason.Receptions)}</p>
-                                <p className="statsLabel">Offensive Snaps Played</p>
-                                <p>{parseInt(this.props.player1.PlayerSeason.OffensiveSnapsPlayed)}</p>
+                                <p className="statsLabel">Rushing Yards</p>
+                                <p>{this.props.player1.PlayerSeason.RushingYards}</p>
                                 <p className="statsLabel">Fantasy Points</p>
                                 <p>{this.props.player1.PlayerSeason.FantasyPointsPPR}</p>
                                 <p className="statsLabel">Fumbles Lost</p>
                                 <p>{parseInt(this.props.player1.PlayerSeason.FumblesLost)}</p>
                             </div>
+                            <RaisedButton label="Choose Another Player"
+                                          style={buttonMargin}
+                                          primary={true}/>
                         </div>
                     );
                 case "TE":
@@ -304,6 +313,9 @@ class SelectTeam1 extends Component {
                                 <p className="statsLabel">Fumbles Lost</p>
                                 <p>{parseInt(this.props.player1.PlayerSeason.FumblesLost)}</p>
                             </div>
+                            <RaisedButton label="Choose Another Player"
+                                          style={buttonMargin}
+                                          primary={true}/>
                         </div>
                     );
                 case "K":
@@ -319,6 +331,10 @@ class SelectTeam1 extends Component {
                             <p>{parseInt(this.props.player1.PlayerSeason.ExtraPointsMade)}</p>
                             <p className="statsLabel">Fantasy Points</p>
                             <p>{parseInt(this.props.player1.PlayerSeason.FantasyPointsPPR)}</p>
+                            <RaisedButton label="Choose Another Player"
+                                          style={buttonMargin}
+                                          primary={true}
+                                          className='anotherPlayerButton'/>
                         </div>
                     )
             }
