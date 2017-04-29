@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 import {lightBlue900} from 'material-ui/styles/colors';
 import FlatButton from 'material-ui/FlatButton';
