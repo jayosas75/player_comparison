@@ -87,6 +87,12 @@ const buttonMargin = {
     maxWidth: 130
 };
 
+const otherButtonMargin = {
+    display: 'block',
+    margin: 'auto',
+    maxWidth: 210
+};
+
 const selectedMenuItemStyle = {
     color: lightBlue900,
 };
@@ -230,7 +236,7 @@ class SelectTeam1 extends Component {
                                <p>{parseInt(this.props.player1.PlayerSeason.FumblesLost)}</p>
                            </div>
                            <RaisedButton label="Choose Another Player"
-                                         style={buttonMargin}
+                                         style={otherButtonMargin}
                                          primary={true}/>
                        </div>
                     );
@@ -258,7 +264,7 @@ class SelectTeam1 extends Component {
                                 <p>{parseInt(this.props.player1.PlayerSeason.FumblesLost)}</p>
                             </div>
                             <RaisedButton label="Choose Another Player"
-                                          style={buttonMargin}
+                                          style={otherButtonMargin}
                                           primary={true}/>
                         </div>
                     );
@@ -286,7 +292,7 @@ class SelectTeam1 extends Component {
                                 <p>{parseInt(this.props.player1.PlayerSeason.FumblesLost)}</p>
                             </div>
                             <RaisedButton label="Choose Another Player"
-                                          style={buttonMargin}
+                                          style={otherButtonMargin}
                                           primary={true}/>
                         </div>
                     );
@@ -314,7 +320,7 @@ class SelectTeam1 extends Component {
                                 <p>{parseInt(this.props.player1.PlayerSeason.FumblesLost)}</p>
                             </div>
                             <RaisedButton label="Choose Another Player"
-                                          style={buttonMargin}
+                                          style={otherButtonMargin}
                                           primary={true}/>
                         </div>
                     );
@@ -332,9 +338,8 @@ class SelectTeam1 extends Component {
                             <p className="statsLabel">Fantasy Points</p>
                             <p>{parseInt(this.props.player1.PlayerSeason.FantasyPointsPPR)}</p>
                             <RaisedButton label="Choose Another Player"
-                                          style={buttonMargin}
                                           primary={true}
-                                          className='anotherPlayerButton'/>
+                                          style={otherButtonMargin}/>
                         </div>
                     )
             }
