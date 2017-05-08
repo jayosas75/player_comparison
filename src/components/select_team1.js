@@ -87,6 +87,12 @@ const buttonMargin = {
     maxWidth: 130
 };
 
+const otherButtonMargin = {
+    display: 'block',
+    margin: 'auto',
+    maxWidth: 210
+};
+
 const selectedMenuItemStyle = {
     color: lightBlue900,
 };
@@ -136,7 +142,10 @@ class SelectTeam1 extends Component {
                 }
             }
         }, 2000);
+    }
 
+    changePlayer(){
+        this.props.clearPlayer1();
     }
 
     setPlayerToState(event){
@@ -192,7 +201,6 @@ class SelectTeam1 extends Component {
     renderPlayerImg(){
         setTimeout(() => {
             if(this.props.player1){
-                console.log('grabbing img, ', this.props.player1.PhotoUrl);
                 return (
                     <img src="http://images.nike.com/is/image/DotCom/PDP_P/FT0225_201_A/v-flight-airlock-size-9-football.png?fmt=png-alpha" alt={'Football'} />
                 )
@@ -201,6 +209,8 @@ class SelectTeam1 extends Component {
             }
         }, 5000);
     }
+
+
 
     //player stats that will be displayed under players image
     renderPlayerStats(){
@@ -230,8 +240,9 @@ class SelectTeam1 extends Component {
                                <p>{parseInt(this.props.player1.PlayerSeason.FumblesLost)}</p>
                            </div>
                            <RaisedButton label="Choose Another Player"
-                                         style={buttonMargin}
-                                         primary={true}/>
+                                         style={otherButtonMargin}
+                                         primary={true}
+                                         onTouchTap={this.changePlayer.bind(this)}/>
                        </div>
                     );
                 case "RB":
@@ -258,8 +269,9 @@ class SelectTeam1 extends Component {
                                 <p>{parseInt(this.props.player1.PlayerSeason.FumblesLost)}</p>
                             </div>
                             <RaisedButton label="Choose Another Player"
-                                          style={buttonMargin}
-                                          primary={true}/>
+                                          style={otherButtonMargin}
+                                          primary={true}
+                                          onTouchTap={this.changePlayer.bind(this)}/>
                         </div>
                     );
                 case "WR":
@@ -286,8 +298,9 @@ class SelectTeam1 extends Component {
                                 <p>{parseInt(this.props.player1.PlayerSeason.FumblesLost)}</p>
                             </div>
                             <RaisedButton label="Choose Another Player"
-                                          style={buttonMargin}
-                                          primary={true}/>
+                                          style={otherButtonMargin}
+                                          primary={true}
+                                          onTouchTap={this.changePlayer.bind(this)}/>
                         </div>
                     );
                 case "TE":
@@ -314,8 +327,9 @@ class SelectTeam1 extends Component {
                                 <p>{parseInt(this.props.player1.PlayerSeason.FumblesLost)}</p>
                             </div>
                             <RaisedButton label="Choose Another Player"
-                                          style={buttonMargin}
-                                          primary={true}/>
+                                          style={otherButtonMargin}
+                                          primary={true}
+                                          onTouchTap={this.changePlayer.bind(this)}/>
                         </div>
                     );
                 case "K":
@@ -332,9 +346,9 @@ class SelectTeam1 extends Component {
                             <p className="statsLabel">Fantasy Points</p>
                             <p>{parseInt(this.props.player1.PlayerSeason.FantasyPointsPPR)}</p>
                             <RaisedButton label="Choose Another Player"
-                                          style={buttonMargin}
                                           primary={true}
-                                          className='anotherPlayerButton'/>
+                                          style={otherButtonMargin}
+                                          onTouchTap={this.changePlayer.bind(this)}/>
                         </div>
                     )
             }

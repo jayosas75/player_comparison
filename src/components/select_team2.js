@@ -89,6 +89,12 @@ const buttonMargin = {
     maxWidth: 130
 };
 
+const otherButtonMargin = {
+    display: 'block',
+    margin: 'auto',
+    maxWidth: 210
+};
+
 const anotherPlayerButton = {
     margin: 'auto',
 };
@@ -143,6 +149,10 @@ class SelectTeam2 extends Component {
             }
         }, 2000);
 
+    }
+
+    changePlayer(){
+        this.props.clearPlayer2();
     }
 
     setPlayerToState(event){
@@ -235,8 +245,9 @@ class SelectTeam2 extends Component {
                                 <p>{parseInt(this.props.player2.PlayerSeason.FumblesLost)}</p>
                             </div>
                             <RaisedButton label="Choose Another Player"
-                                          style={buttonMargin}
-                                          primary={true}/>
+                                          style={otherButtonMargin}
+                                          primary={true}
+                                          onTouchTap={this.changePlayer.bind(this)}/>
                         </div>
                     );
                 case "RB":
@@ -263,8 +274,9 @@ class SelectTeam2 extends Component {
                                 <p>{parseInt(this.props.player2.PlayerSeason.FumblesLost)}</p>
                             </div>
                             <RaisedButton label="Choose Another Player"
-                                          style={buttonMargin}
-                                          primary={true}/>
+                                          style={otherButtonMargin}
+                                          primary={true}
+                                          onTouchTap={this.changePlayer.bind(this)}/>
                         </div>
                     );
                 case "WR":
@@ -291,8 +303,9 @@ class SelectTeam2 extends Component {
                                 <p>{parseInt(this.props.player2.PlayerSeason.FumblesLost)}</p>
                             </div>
                             <RaisedButton label="Choose Another Player"
-                                          style={buttonMargin}
-                                          primary={true}/>
+                                          style={otherButtonMargin}
+                                          primary={true}
+                                          onTouchTap={this.changePlayer.bind(this)}/>
                         </div>
                     );
                 case "TE":
@@ -319,8 +332,9 @@ class SelectTeam2 extends Component {
                                 <p>{parseInt(this.props.player2.PlayerSeason.FumblesLost)}</p>
                             </div>
                             <RaisedButton label="Choose Another Player"
-                                          style={buttonMargin}
-                                          primary={true}/>
+                                          style={otherButtonMargin}
+                                          primary={true}
+                                          onTouchTap={this.changePlayer.bind(this)}/>
                         </div>
                     );
                 case "K":
@@ -337,8 +351,9 @@ class SelectTeam2 extends Component {
                             <p className="otherStatsLabel">Fantasy Points</p>
                             <p>{parseInt(this.props.player2.PlayerSeason.FantasyPointsPPR)}</p>
                             <RaisedButton label="Choose Another Player"
-                                          style={anotherPlayerButton}
-                                          primary={true}/>
+                                          style={otherButtonMargin}
+                                          primary={true}
+                                          onTouchTap={this.changePlayer.bind(this)}/>
                         </div>
                     )
             }
@@ -354,7 +369,7 @@ class SelectTeam2 extends Component {
                        className='cardHolder'>
                     <h1 style={text}>Select</h1>
                     <h1 style={text}>Team and Position</h1>
-                    <h1 style={text}>of Player 1</h1>
+                    <h1 style={text}>of Player 2</h1>
                     <DropDownMenu style={dropDownStyle.customWidth}
                                   maxHeight={300}
                                   value={this.state.valueTeam}
