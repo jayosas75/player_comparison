@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { FETCH_TEAM_PLAYERS1, FETCH_TEAM_PLAYERS2, SET_PLAYER1, SET_PLAYER2, SHOW_SNACKBAR, HIDE_SNACKBAR, } from './types';
+import { FETCH_TEAM_PLAYERS1, FETCH_TEAM_PLAYERS2, SET_PLAYER1, SET_PLAYER2,
+         RESET_PLAYER1, RESET_PLAYER2, SHOW_SNACKBAR, HIDE_SNACKBAR, } from './types';
 
 const BASE_URL = 'https://api.fantasydata.net/v3/nfl/stats/JSON/';
 const API_KEY = {
@@ -27,16 +28,31 @@ export function getPlayerData1(playerObj){
                 type: SET_PLAYER1,
                 payload: playerObj
             });
-            console.log('player should be in state/props, check it');
     }
 }
+
 export function getPlayerData2(playerObj){
     return function(dispatch){
         dispatch({
             type: SET_PLAYER2,
             payload: playerObj
         });
-        console.log('player should be in state/props, check it');
+    }
+}
+
+export function clearPlayer1(){
+    return function(dispatch){
+        dispatch({
+            type: RESET_PLAYER1
+        })
+    }
+}
+
+export function clearPlayer2(){
+    return function(dispatch){
+        dispatch({
+            type: RESET_PLAYER2
+        })
     }
 }
 

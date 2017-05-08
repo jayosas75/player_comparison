@@ -1,4 +1,5 @@
-import {FETCH_TEAM_PLAYERS1,FETCH_TEAM_PLAYERS2, SET_PLAYER1, SET_PLAYER2, SHOW_SNACKBAR, HIDE_SNACKBAR} from '../actions/types';
+import {FETCH_TEAM_PLAYERS1,FETCH_TEAM_PLAYERS2, SET_PLAYER1, SET_PLAYER2, RESET_PLAYER1, RESET_PLAYER2,
+        SHOW_SNACKBAR, HIDE_SNACKBAR} from '../actions/types';
 
 
 function playerData(state = {
@@ -34,6 +35,16 @@ function playerData(state = {
             return {
                 ...state,
                 open: false
+            };
+        case RESET_PLAYER1:
+            return {
+                ...state,
+                player1: undefined
+            };
+        case RESET_PLAYER2:
+            return {
+                ...state,
+                player2: undefined
             };
         default:
             return state;
