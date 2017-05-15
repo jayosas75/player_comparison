@@ -1,16 +1,15 @@
-# React Starter
+# NFL Football Comparer
 
-> This repo contains boilerplate code to aid in the creation of a new React app with Redux. Follow the below setup instructions to get started.
+> This is an simple and short way to view the offensive stats of your favorite NFL Players.
 
-### Setup Instructions
+### Getting Started
 
-> 1. Fork this repo
-1. Clone your forked copy of this repo
-    - `git clone https://github.com/[Your Username]/react_starter.git`
-1. Change directory into the newly cloned repo
-    - `cd react_starter`
-1. Install dependencies 
-    - `npm install`
-1. Start dev server
-    - `npm start`
-1. Open a browser and navigate to `localhost:3000` You should see a page that displays "Welcome to React!"
+1. Choose Team and Position of desired player. Entire depth chart of those specifications will load onto the page.
+
+1. Choose correct radio button for desired player.
+    
+1. View 2016 season stats of chosen player!
+    
+1. If you want to choose another player button will appear to let you do so!
+    
+1. More advanced functionality will be coming soon!

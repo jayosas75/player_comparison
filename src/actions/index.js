@@ -182,7 +182,6 @@ export function fetch_team_players1(values){
                         smallerRoster.push(resp.data[i]);
                     }
                 }
-                console.log('Selected Position from Selected Team: ', smallerRoster);
                 dispatch({
                     type: FETCH_TEAM_PLAYERS1,
                     payload: smallerRoster
@@ -318,7 +317,6 @@ export function fetch_team_players2(values){
                     smallerRoster.push(resp.data[i]);
                 }
             }
-            console.log('Selected Position from Selected Team: ', smallerRoster);
             dispatch({
                 type: FETCH_TEAM_PLAYERS2,
                 payload: smallerRoster
