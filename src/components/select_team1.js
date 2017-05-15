@@ -38,7 +38,7 @@ function showPositionClicked(event) {
 
 //styles and display settings for material-ui paper, buttons, and dropdown menu
 const showSelection = {
-    backgroundColor: 'lightgrey',
+    backgroundColor: 'black',
     color: lightBlue900,
     height: 600,
     minWidth: 300,
@@ -50,7 +50,7 @@ const showSelection = {
 };
 
 const hideSelection = {
-    backgroundColor: 'lightgrey',
+    backgroundColor: 'black',
     color: lightBlue900,
     height: 600,
     minWidth: 375,

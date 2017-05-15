@@ -3,7 +3,8 @@ import {FETCH_TEAM_PLAYERS1,FETCH_TEAM_PLAYERS2, SET_PLAYER1, SET_PLAYER2, RESET
 
 
 function playerData(state = {
-    open: false
+    open: false,
+    openDialog: false
 }, action){
     switch(action.type){
         case FETCH_TEAM_PLAYERS1:
