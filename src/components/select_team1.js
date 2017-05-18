@@ -15,7 +15,7 @@ let submitButtonHit = false;
 let player1Info = null;
 
 //drop down items for material-ui dropdown
-const teams = [];
+let teams = [];
 const NFLteams = ['Bears','Bengals','Bills','Broncos','Browns','Buccaneers','Colts','Cardinals','Chargers','Chiefs',
     'Cowboys','Dolphins','Eagles','Falcons','Giants','Jaguars','Jets', 'Lions','Packers','Panthers','Patriots','Redskins',
     'Raiders','Rams','Ravens','Saints','Seahawks','Steelers','Texans','Titans','Vikings','49ers'];
@@ -27,7 +27,7 @@ function showTeamClicked(event) {
     chosenTeam = event.target.innerText;
 }
 
-const positions = [];
+let positions = [];
 const NFLPositions = ['Quarterback', 'Running back', 'Wide receiver', 'Tight end', 'Kicker'];
 for (let i = 0; i < 5; i++ ) {
     positions.push(<MenuItem value={NFLPositions[i]} key={i} primaryText={`${NFLPositions[i]}`} onTouchTap={showPositionClicked.bind(this)} />);
@@ -110,12 +110,11 @@ class SelectTeam1 extends Component {
     handlePositionChange = (event, index, valuePosition) => this.setState({valuePosition});
 
     //function to change state so snackbar will close
-    closeSnackBar = () => {
-        this.props.hideSnackBar();
-    };
+    closeSnackBar = () => this.props.hideSnackBar();
 
     //functions to submit team to database and to find player selected by playerID
     submitTeam(){
+        //action to change state so snackbar will open
         this.props.showSnackBar();
         setTimeout(() => {
             if(chosenTeam == null){
@@ -144,9 +143,8 @@ class SelectTeam1 extends Component {
         }, 2000);
     }
 
-    changePlayer(){
-        this.props.clearPlayer1();
-    }
+    //clears current player from state so we can select a new one
+    changePlayer = () => this.props.clearPlayer1();
 
     setPlayerToState(event){
         event.persist();
