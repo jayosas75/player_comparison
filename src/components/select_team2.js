@@ -219,6 +219,11 @@ class SelectTeam2 extends Component {
     //player stats that will be displayed under players image
     renderPlayerStats(){
         if(this.props.player2){
+            if(this.props.player2.Experience < 1){
+                window.alert('Pick a player that accumulated stats in 2016');
+                this.props.hideSnackBar();
+                return this.props.clearPlayer2();
+            }
             switch(this.props.player2.Position){
                 case "QB":
                     return (

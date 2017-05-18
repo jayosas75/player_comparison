@@ -1,18 +1,17 @@
 {
-  "name": "react_starter",
+  "name": "player_comparison",
   "version": "1.0.0",
-  "description": "Starting setup for react redux project",
-  "main": "index.js",
+  "description": "Football Comparison Tool",
   "scripts": {
     "start": "node dev_server.js",
     "pack": "webpack --config webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Scott Bowler",
+  "author": "John Yosas",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Learning-Fuze/react_starter.git"
+    "url": "https://github.com/jayosas75/player_comparison.git"
   },
   "dependencies": {
     "axios": "^0.15.3",
