@@ -49,6 +49,7 @@ const showSelection = {
     textAlign: 'center',
     display: 'inline-block',
     fontFamily: 'Roboto, sans-serif',
+    borderRadius: '15%',
 };
 
 const hideSelection = {
@@ -62,6 +63,7 @@ const hideSelection = {
     textAlign: 'center',
     display: 'none',
     fontFamily: 'Roboto, sans-serif',
+    borderRadius: '15%',
 };
 
 const text ={
