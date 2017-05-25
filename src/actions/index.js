@@ -44,7 +44,7 @@ export function clearPlayer1(){
     return function(dispatch){
         dispatch({
             type: RESET_PLAYER1
-        })
+        });
     }
 }
 
@@ -102,7 +102,7 @@ export function fetch_team_players1(values){
             teamID = 'ARI';
             break;
         case 'Chargers':
-            teamID = 'SD';
+            teamID = 'LAC';
             break;
         case 'Chiefs':
             teamID = 'KC';
@@ -147,7 +147,7 @@ export function fetch_team_players1(values){
             teamID = 'OAK';
             break;
         case 'Rams':
-            teamID = 'LA';
+            teamID = 'LAR';
             break;
         case 'Ravens':
             teamID = 'BAL';
@@ -186,9 +186,12 @@ export function fetch_team_players1(values){
                     type: FETCH_TEAM_PLAYERS1,
                     payload: smallerRoster
                 });
+                dispatch({
+                    type: HIDE_SNACKBAR
+                });
             }).catch((err) => {
                 dispatch('error');
-            })
+            });
         }
     }
 export function fetch_team_players2(values){
@@ -237,7 +240,7 @@ export function fetch_team_players2(values){
             teamID = 'ARI';
             break;
         case 'Chargers':
-            teamID = 'SD';
+            teamID = 'LAC';
             break;
         case 'Chiefs':
             teamID = 'KC';
@@ -282,7 +285,7 @@ export function fetch_team_players2(values){
             teamID = 'OAK';
             break;
         case 'Rams':
-            teamID = 'LA';
+            teamID = 'LAR';
             break;
         case 'Ravens':
             teamID = 'BAL';
