@@ -11,7 +11,6 @@ import Snackbar from 'material-ui/Snackbar';
 //globals to keep track of teams and players selected
 let chosenTeam = null;
 let chosenPosition = null;
-let submitButtonHit = false;
 let player2info = null;
 
 //drop down items for material-ui dropdown
@@ -32,7 +31,6 @@ const NFLPositions = ['Quarterback', 'Running back', 'Wide receiver', 'Tight end
 for (let i = 0; i < 5; i++ ) {
     positions.push(<MenuItem value={NFLPositions[i]} key={i} primaryText={`${NFLPositions[i]}`} onTouchTap={showPositionClicked.bind(this)} />);
 }
-
 function showPositionClicked(event) {
     chosenPosition = event.target.innerText;
 }
@@ -98,10 +96,6 @@ const otherButtonMargin = {
     maxWidth: 210
 };
 
-const anotherPlayerButton = {
-    margin: 'auto',
-};
-
 const selectedMenuItemStyle = {
     color: lightBlue900,
 };
@@ -125,32 +119,23 @@ class SelectTeam2 extends Component {
     submitTeam(){
         //action to change state so snackbar will open
         this.props.showSnackBar();
-        setTimeout(() => {
-            if(chosenTeam == null){
-                chosenTeam = 'Bears';
-            }
-            if(chosenPosition == null){
-                chosenPosition = 'Quarterback';
-            }
-            let values = {
-                team: chosenTeam,
-                position: chosenPosition
-            };
-            this.props.fetch_team_players2(values);
-            submitButtonHit = true;
-        }, 1000);
+        if(!chosenTeam) chosenTeam = 'Bears';
+        if(chosenPosition == null) chosenPosition = 'Quarterback';
+        let values = {
+            team: chosenTeam,
+            position: chosenPosition
+        };
+        this.props.fetch_team_players2(values);
+
     }
 
     submitPlayer(){
-        this.props.showSnackBar();
-        setTimeout(() => {
-            for(let i = 0; i < this.props.selectedTeam2.length; i++){
-                if(this.props.selectedTeam2[i].PlayerID == player2info){
-                    this.props.getPlayerData2(this.props.selectedTeam2[i]);
-                }
+        let playersOfTeam = this.props.selectedTeam2;
+        playersOfTeam.find((eachPlayer) => {
+            if(eachPlayer.PlayerID == player2info){
+                this.props.getPlayerData2(eachPlayer);
             }
-        }, 2000);
-
+        });
     }
 
     //clears current player from state so we can select a new one
@@ -163,7 +148,7 @@ class SelectTeam2 extends Component {
 
     //function to populate player list of selected team and position as well as button to move onto result.
     renderPlayers(){
-        if(submitButtonHit === true){
+        if(this.props.selectedTeam2){
             return this.props.selectedTeam2.map(player => {
                 return (
                     <div key={player.PlayerID} className="inputPosition">
@@ -182,7 +167,7 @@ class SelectTeam2 extends Component {
     }
 
     renderSubmitPlayerButton(){
-        if(submitButtonHit === true){
+        if(this.props.selectedTeam2){
             return (
                 <RaisedButton label="Pick Player"
                               style={buttonMargin}
@@ -222,146 +207,146 @@ class SelectTeam2 extends Component {
     renderPlayerStats(){
         if(this.props.player2){
             if(this.props.player2.Experience < 1){
+                this.props.clearPlayer2();
                 window.alert('Pick a player that accumulated stats in 2016');
-                this.props.hideSnackBar();
-                return this.props.clearPlayer2();
-            }
-            switch(this.props.player2.Position){
-                case "QB":
-                    return (
-                        <div>
-                            <div className="halfPaper1">
-                                <p className="otherStatsLabel">Completion Percentage</p>
-                                <p>{this.props.player2.PlayerSeason.PassingCompletionPercentage + '%'}</p>
-                                <p className="otherStatsLabel">Passing Yards</p>
-                                <p>{this.props.player2.PlayerSeason.PassingYards}</p>
-                                <p className="otherStatsLabel">Passing Touchdowns</p>
-                                <p>{parseInt(this.props.player2.PlayerSeason.PassingTouchdowns)}</p>
-                                <p className="otherStatsLabel">Interceptions</p>
-                                <p>{parseInt(this.props.player2.PlayerSeason.PassingInterceptions)}</p>
+            } else {
+                switch(this.props.player2.Position){
+                    case "QB":
+                        return (
+                            <div>
+                                <div className="halfPaper1">
+                                    <p className="otherStatsLabel">Completion Percentage</p>
+                                    <p>{this.props.player2.PlayerSeason.PassingCompletionPercentage + '%'}</p>
+                                    <p className="otherStatsLabel">Passing Yards</p>
+                                    <p>{this.props.player2.PlayerSeason.PassingYards}</p>
+                                    <p className="otherStatsLabel">Passing Touchdowns</p>
+                                    <p>{parseInt(this.props.player2.PlayerSeason.PassingTouchdowns)}</p>
+                                    <p className="otherStatsLabel">Interceptions</p>
+                                    <p>{parseInt(this.props.player2.PlayerSeason.PassingInterceptions)}</p>
+                                </div>
+                                <div className="halfPaper1">
+                                    <p className="otherStatsLabel">Rushing Yards</p>
+                                    <p>{this.props.player2.PlayerSeason.RushingYards}</p>
+                                    <p className="otherStatsLabel">Rushing Touchdowns</p>
+                                    <p>{parseInt(this.props.player2.PlayerSeason.RushingTouchdowns)}</p>
+                                    <p className="otherStatsLabel">Fantasy Points</p>
+                                    <p>{this.props.player2.PlayerSeason.FantasyPointsPPR}</p>
+                                    <p className="otherStatsLabel">Fumbles Lost</p>
+                                    <p>{parseInt(this.props.player2.PlayerSeason.FumblesLost)}</p>
+                                </div>
+                                <RaisedButton label="Choose Another Player"
+                                              style={otherButtonMargin}
+                                              primary={true}
+                                              onTouchTap={this.changePlayer.bind(this)}/>
                             </div>
-                            <div className="halfPaper1">
-                                <p className="otherStatsLabel">Rushing Yards</p>
-                                <p>{this.props.player2.PlayerSeason.RushingYards}</p>
-                                <p className="otherStatsLabel">Rushing Touchdowns</p>
-                                <p>{parseInt(this.props.player2.PlayerSeason.RushingTouchdowns)}</p>
+                        );
+                    case "RB":
+                        return (
+                            <div>
+                                <div className="halfPaper1">
+                                    <p className="otherStatsLabel">Rushing Attempts</p>
+                                    <p>{parseInt(this.props.player2.PlayerSeason.RushingAttempts)}</p>
+                                    <p className="otherStatsLabel">Rushing Yards</p>
+                                    <p>{this.props.player2.PlayerSeason.RushingYards}</p>
+                                    <p className="otherStatsLabel">Rushing Touchdowns</p>
+                                    <p>{parseInt(this.props.player2.PlayerSeason.RushingTouchdowns)}</p>
+                                    <p className="otherStatsLabel">Receptions</p>
+                                    <p>{parseInt(this.props.player2.PlayerSeason.Receptions)}</p>
+                                </div>
+                                <div className="halfPaper1">
+                                    <p className="otherStatsLabel">Receiving Yards</p>
+                                    <p>{this.props.player2.PlayerSeason.ReceivingYards}</p>
+                                    <p className="otherStatsLabel">Receiving Touchdowns</p>
+                                    <p>{parseInt(this.props.player2.PlayerSeason.ReceivingTouchdowns)}</p>
+                                    <p className="otherStatsLabel">Fantasy Points</p>
+                                    <p>{this.props.player2.PlayerSeason.FantasyPointsPPR}</p>
+                                    <p className="otherStatsLabel">Fumbles Lost</p>
+                                    <p>{parseInt(this.props.player2.PlayerSeason.FumblesLost)}</p>
+                                </div>
+                                <RaisedButton label="Choose Another Player"
+                                              style={otherButtonMargin}
+                                              primary={true}
+                                              onTouchTap={this.changePlayer.bind(this)}/>
+                            </div>
+                        );
+                    case "WR":
+                        return (
+                            <div>
+                                <div className="halfPaper1">
+                                    <p className="otherStatsLabel">Targets</p>
+                                    <p>{parseInt(this.props.player2.PlayerSeason.ReceivingTargets)}</p>
+                                    <p className="otherStatsLabel">Receiving Yards</p>
+                                    <p>{this.props.player2.PlayerSeason.ReceivingYards}</p>
+                                    <p className="otherStatsLabel">Receiving Touchdowns</p>
+                                    <p>{parseInt(this.props.player2.PlayerSeason.ReceivingTouchdowns)}</p>
+                                    <p className="otherStatsLabel">Yards Per Reception</p>
+                                    <p>{this.props.player2.PlayerSeason.ReceivingYardsPerReception}</p>
+                                </div>
+                                <div className="halfPaper1">
+                                    <p className="otherStatsLabel">Receptions</p>
+                                    <p>{parseInt(this.props.player2.PlayerSeason.Receptions)}</p>
+                                    <p className="otherStatsLabel">Rushing Yards</p>
+                                    <p>{this.props.player2.PlayerSeason.RushingYards}</p>
+                                    <p className="otherStatsLabel">Fantasy Points</p>
+                                    <p>{this.props.player2.PlayerSeason.FantasyPointsPPR}</p>
+                                    <p className="otherStatsLabel">Fumbles Lost</p>
+                                    <p>{parseInt(this.props.player2.PlayerSeason.FumblesLost)}</p>
+                                </div>
+                                <RaisedButton label="Choose Another Player"
+                                              style={otherButtonMargin}
+                                              primary={true}
+                                              onTouchTap={this.changePlayer.bind(this)}/>
+                            </div>
+                        );
+                    case "TE":
+                        return (
+                            <div>
+                                <div className="halfPaper1">
+                                    <p className="otherStatsLabel">Targets</p>
+                                    <p>{parseInt(this.props.player2.PlayerSeason.ReceivingTargets)}</p>
+                                    <p className="otherStatsLabel">Receiving Yards</p>
+                                    <p>{this.props.player2.PlayerSeason.ReceivingYards}</p>
+                                    <p className="otherStatsLabel">Receiving Touchdowns</p>
+                                    <p>{parseInt(this.props.player2.PlayerSeason.ReceivingTouchdowns)}</p>
+                                    <p className="otherStatsLabel">Yards Per Reception</p>
+                                    <p>{this.props.player2.PlayerSeason.ReceivingYardsPerReception}</p>
+                                </div>
+                                <div className="halfPaper1">
+                                    <p className="otherStatsLabel">Receptions</p>
+                                    <p>{parseInt(this.props.player2.PlayerSeason.Receptions)}</p>
+                                    <p className="otherStatsLabel">Offensive Snaps Played</p>
+                                    <p>{parseInt(this.props.player2.PlayerSeason.OffensiveSnapsPlayed)}</p>
+                                    <p className="otherStatsLabel">Fantasy Points</p>
+                                    <p>{this.props.player2.PlayerSeason.FantasyPointsPPR}</p>
+                                    <p className="otherStatsLabel">Fumbles Lost</p>
+                                    <p>{parseInt(this.props.player2.PlayerSeason.FumblesLost)}</p>
+                                </div>
+                                <RaisedButton label="Choose Another Player"
+                                              style={otherButtonMargin}
+                                              primary={true}
+                                              onTouchTap={this.changePlayer.bind(this)}/>
+                            </div>
+                        );
+                    case "K":
+                        return (
+                            <div>
+                                <p className="otherStatsLabel">Field Goal Percentage</p>
+                                <p>{this.props.player2.PlayerSeason.FieldGoalPercentage + '%'}</p>
+                                <p className="otherStatsLabel">40+ Yard Field Goals</p>
+                                <p>{parseInt(this.props.player2.PlayerSeason.FieldGoalsMade40to49)}</p>
+                                <p className="otherStatsLabel">50+ Yard Field Goals</p>
+                                <p>{parseInt(this.props.player2.PlayerSeason.FieldGoalsMade50plus)}</p>
+                                <p className="otherStatsLabel">Extra Points Made</p>
+                                <p>{parseInt(this.props.player2.PlayerSeason.ExtraPointsMade)}</p>
                                 <p className="otherStatsLabel">Fantasy Points</p>
-                                <p>{this.props.player2.PlayerSeason.FantasyPointsPPR}</p>
-                                <p className="otherStatsLabel">Fumbles Lost</p>
-                                <p>{parseInt(this.props.player2.PlayerSeason.FumblesLost)}</p>
+                                <p>{parseInt(this.props.player2.PlayerSeason.FantasyPointsPPR)}</p>
+                                <RaisedButton label="Choose Another Player"
+                                              style={otherButtonMargin}
+                                              primary={true}
+                                              onTouchTap={this.changePlayer.bind(this)}/>
                             </div>
-                            <RaisedButton label="Choose Another Player"
-                                          style={otherButtonMargin}
-                                          primary={true}
-                                          onTouchTap={this.changePlayer.bind(this)}/>
-                        </div>
-                    );
-                case "RB":
-                    return (
-                        <div>
-                            <div className="halfPaper1">
-                                <p className="otherStatsLabel">Rushing Attempts</p>
-                                <p>{parseInt(this.props.player2.PlayerSeason.RushingAttempts)}</p>
-                                <p className="otherStatsLabel">Rushing Yards</p>
-                                <p>{this.props.player2.PlayerSeason.RushingYards}</p>
-                                <p className="otherStatsLabel">Rushing Touchdowns</p>
-                                <p>{parseInt(this.props.player2.PlayerSeason.RushingTouchdowns)}</p>
-                                <p className="otherStatsLabel">Receptions</p>
-                                <p>{parseInt(this.props.player2.PlayerSeason.Receptions)}</p>
-                            </div>
-                            <div className="halfPaper1">
-                                <p className="otherStatsLabel">Receiving Yards</p>
-                                <p>{this.props.player2.PlayerSeason.ReceivingYards}</p>
-                                <p className="otherStatsLabel">Receiving Touchdowns</p>
-                                <p>{parseInt(this.props.player2.PlayerSeason.ReceivingTouchdowns)}</p>
-                                <p className="otherStatsLabel">Fantasy Points</p>
-                                <p>{this.props.player2.PlayerSeason.FantasyPointsPPR}</p>
-                                <p className="otherStatsLabel">Fumbles Lost</p>
-                                <p>{parseInt(this.props.player2.PlayerSeason.FumblesLost)}</p>
-                            </div>
-                            <RaisedButton label="Choose Another Player"
-                                          style={otherButtonMargin}
-                                          primary={true}
-                                          onTouchTap={this.changePlayer.bind(this)}/>
-                        </div>
-                    );
-                case "WR":
-                    return (
-                        <div>
-                            <div className="halfPaper1">
-                                <p className="otherStatsLabel">Targets</p>
-                                <p>{parseInt(this.props.player2.PlayerSeason.ReceivingTargets)}</p>
-                                <p className="otherStatsLabel">Receiving Yards</p>
-                                <p>{this.props.player2.PlayerSeason.ReceivingYards}</p>
-                                <p className="otherStatsLabel">Receiving Touchdowns</p>
-                                <p>{parseInt(this.props.player2.PlayerSeason.ReceivingTouchdowns)}</p>
-                                <p className="otherStatsLabel">Yards Per Reception</p>
-                                <p>{this.props.player2.PlayerSeason.ReceivingYardsPerReception}</p>
-                            </div>
-                            <div className="halfPaper1">
-                                <p className="otherStatsLabel">Receptions</p>
-                                <p>{parseInt(this.props.player2.PlayerSeason.Receptions)}</p>
-                                <p className="otherStatsLabel">Rushing Yards</p>
-                                <p>{this.props.player2.PlayerSeason.RushingYards}</p>
-                                <p className="otherStatsLabel">Fantasy Points</p>
-                                <p>{this.props.player2.PlayerSeason.FantasyPointsPPR}</p>
-                                <p className="otherStatsLabel">Fumbles Lost</p>
-                                <p>{parseInt(this.props.player2.PlayerSeason.FumblesLost)}</p>
-                            </div>
-                            <RaisedButton label="Choose Another Player"
-                                          style={otherButtonMargin}
-                                          primary={true}
-                                          onTouchTap={this.changePlayer.bind(this)}/>
-                        </div>
-                    );
-                case "TE":
-                    return (
-                        <div>
-                            <div className="halfPaper1">
-                                <p className="otherStatsLabel">Targets</p>
-                                <p>{parseInt(this.props.player2.PlayerSeason.ReceivingTargets)}</p>
-                                <p className="otherStatsLabel">Receiving Yards</p>
-                                <p>{this.props.player2.PlayerSeason.ReceivingYards}</p>
-                                <p className="otherStatsLabel">Receiving Touchdowns</p>
-                                <p>{parseInt(this.props.player2.PlayerSeason.ReceivingTouchdowns)}</p>
-                                <p className="otherStatsLabel">Yards Per Reception</p>
-                                <p>{this.props.player2.PlayerSeason.ReceivingYardsPerReception}</p>
-                            </div>
-                            <div className="halfPaper1">
-                                <p className="otherStatsLabel">Receptions</p>
-                                <p>{parseInt(this.props.player2.PlayerSeason.Receptions)}</p>
-                                <p className="otherStatsLabel">Offensive Snaps Played</p>
-                                <p>{parseInt(this.props.player2.PlayerSeason.OffensiveSnapsPlayed)}</p>
-                                <p className="otherStatsLabel">Fantasy Points</p>
-                                <p>{this.props.player2.PlayerSeason.FantasyPointsPPR}</p>
-                                <p className="otherStatsLabel">Fumbles Lost</p>
-                                <p>{parseInt(this.props.player2.PlayerSeason.FumblesLost)}</p>
-                            </div>
-                            <RaisedButton label="Choose Another Player"
-                                          style={otherButtonMargin}
-                                          primary={true}
-                                          onTouchTap={this.changePlayer.bind(this)}/>
-                        </div>
-                    );
-                case "K":
-                    return (
-                        <div>
-                            <p className="otherStatsLabel">Field Goal Percentage</p>
-                            <p>{this.props.player2.PlayerSeason.FieldGoalPercentage + '%'}</p>
-                            <p className="otherStatsLabel">40+ Yard Field Goals</p>
-                            <p>{parseInt(this.props.player2.PlayerSeason.FieldGoalsMade40to49)}</p>
-                            <p className="otherStatsLabel">50+ Yard Field Goals</p>
-                            <p>{parseInt(this.props.player2.PlayerSeason.FieldGoalsMade50plus)}</p>
-                            <p className="otherStatsLabel">Extra Points Made</p>
-                            <p>{parseInt(this.props.player2.PlayerSeason.ExtraPointsMade)}</p>
-                            <p className="otherStatsLabel">Fantasy Points</p>
-                            <p>{parseInt(this.props.player2.PlayerSeason.FantasyPointsPPR)}</p>
-                            <RaisedButton label="Choose Another Player"
-                                          style={otherButtonMargin}
-                                          primary={true}
-                                          onTouchTap={this.changePlayer.bind(this)}/>
-                        </div>
-                    )
+                        )
+                }
             }
         }
     }
@@ -404,7 +389,7 @@ class SelectTeam2 extends Component {
                     <Snackbar
                         open={this.props.open}
                         message="Specifications Submitted, Loading..."
-                        autoHideDuration={5000}
+                        autoHideDuration={20000}
                         onRequestClose={this.closeSnackBar}
                     />
                     <RaisedButton label="Find Player"
