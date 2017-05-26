@@ -34,6 +34,11 @@ const toolbarStyle = {
     }
 };
 
+const customContentStyle = {
+    width: '100%',
+    maxWidth: 'none',
+};
+
 class Header extends Component {
 
     state = {
@@ -80,6 +85,7 @@ class Header extends Component {
                                 modal={true}
                                 open={this.state.open}
                                 autoScrollBodyContent={true}
+                                contentStyle={customContentStyle}
                             >
                                 <p>1. Pick a team and position of desired player. Click "Find Player"</p>
                                 <p>2. Choose Player and hit "Pick Player" button and their 2016 on-field stats will display.</p>
