@@ -6,6 +6,8 @@ import MenuItem from 'material-ui/MenuItem';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
 import Snackbar from 'material-ui/Snackbar';
 
 //globals to keep track of teams and players selected
@@ -105,7 +107,8 @@ class SelectTeam2 extends Component {
     constructor(props) {
         super(props);
         this.state = {valueTeam: 'Bears',
-            valuePosition: 'Quarterback'};
+            valuePosition: 'Quarterback',
+            alert: false};
     }
 
     //functions to set value selected from drop down menus
@@ -114,6 +117,10 @@ class SelectTeam2 extends Component {
 
     //function to change state so snackbar will close
     closeSnackBar = () => this.props.hideSnackBar();
+
+    //function to change state so Alert Dialog will display, using without redux to show understanding of ReactJS.
+    handleOpenAlert = () => this.setState({alert: true});
+    handleClose = () => this.setState({alert: false});
 
     //functions to submit team to database and to find player selected by playerID
     submitTeam(){
@@ -208,7 +215,7 @@ class SelectTeam2 extends Component {
         if(this.props.player2){
             if(this.props.player2.Experience < 1){
                 this.props.clearPlayer2();
-                window.alert('Pick a player that accumulated stats in 2016');
+                this.handleOpenAlert();
             } else {
                 switch(this.props.player2.Position){
                     case "QB":
@@ -353,6 +360,14 @@ class SelectTeam2 extends Component {
 
     //all that will be rendered onto component
     render(){
+        //declared variable here to be able to use this.handleclose in its proper scope
+        const actionsAlert = [
+            <FlatButton
+                label="Okay"
+                primary={true}
+                onTouchTap={this.handleClose}
+            />,
+        ];
         return (
             <div className='cardHolder'>
                 <Paper style={this.props.player2 ? hideSelection : showSelection}
@@ -410,6 +425,14 @@ class SelectTeam2 extends Component {
                     <br/>
                     {this.renderPlayerStats()}
                 </Paper>
+                <Dialog
+                    actions={actionsAlert}
+                    modal={false}
+                    open={this.state.alert}
+                    onRequestClose={this.handleClose}
+                >
+                    Pick a player that accumulated stats within the 2016 season.
+                </Dialog>
             </div>
         )
     }

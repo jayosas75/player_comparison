@@ -70,4 +70,8 @@
         display: inline;
     }
 
+    .howToDialog {
+        width: 100%;
+    }
+
 }

@@ -35,7 +35,7 @@ const toolbarStyle = {
 };
 
 const customContentStyle = {
-    width: '100%',
+    width: '50%',
     maxWidth: 'none',
 };
 
@@ -56,16 +56,10 @@ class Header extends Component {
     render(){
         const actions = [
             <FlatButton
-                label="Cancel"
+                label="Okay"
                 primary={true}
                 onTouchTap={this.handleClose}
-            />,
-            <FlatButton
-                label="Submit"
-                primary={true}
-                disabled={true}
-                onTouchTap={this.handleClose}
-            />,
+            />
         ];
         return (
             <div>
@@ -86,9 +80,10 @@ class Header extends Component {
                                 open={this.state.open}
                                 autoScrollBodyContent={true}
                                 contentStyle={customContentStyle}
+                                className="howToDialog"
                             >
                                 <p>1. Pick a team and position of desired player. Click "Find Player"</p>
-                                <p>2. Choose Player and hit "Pick Player" button and their 2016 on-field stats will display.</p>
+                                <p>2. Choose Player and hit "Pick Player" button and their <i>2016</i> on-field stats will display.</p>
                                 <p>3. If you want to select a new player hit the "Choose Another Player" button.</p>
                                 <p><strong>**Fantasy Football Scores are based on these details**</strong></p>
                                 <ol>
@@ -103,6 +98,7 @@ class Header extends Component {
                                     <li>2-Point Conversions: 2 points</li>
                                     <li>Fumbles Lost: -2 points</li>
                                 </ol>
+                                <p><i><strong>All data from this app has been pulled from the fantasydata.com API</strong></i></p>
                             </Dialog>
                         </ToolbarGroup>
                     </Toolbar>
