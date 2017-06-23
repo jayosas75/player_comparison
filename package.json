@@ -2,7 +2,7 @@
   "name": "player_comparison",
   "version": "1.0.0",
   "description": "Football Comparison Tool",
-  "homepage": "https://jayosas75.github.io/player_comparison/dist/index.html",
+  "homepage": "https://jayosas75.github.io/player_comparison/",
   "scripts": {
     "build": "node dev_server.js",
     "pack": "webpack --config webpack.config.js",
