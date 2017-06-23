@@ -2,11 +2,13 @@
   "name": "player_comparison",
   "version": "1.0.0",
   "description": "Football Comparison Tool",
+  "homepage": "https://jayosas75.github.io/player_comparison",
   "scripts": {
     "build": "node dev_server.js",
     "pack": "webpack --config webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-postbuild": "webpack -p --config ./webpack.prod.config.js --progress"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "author": "John Yosas",
   "license": "ISC",
