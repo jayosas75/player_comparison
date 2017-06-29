@@ -16,7 +16,7 @@ const store = createStoreWithMiddleware(reducers);
 ReactDOM.render(
     <Provider store={store}>
         <Router history ={browserHistory}>
-            <Route path="/dist/index" component={App}>
+            <Route path="player_comparison/dist/index" component={App}>
                 <IndexRoute component={Home}/>
                 <Route path="select_team1" component={SelectTeam1}/>
                 <Route path="select_team2" component={SelectTeam2}/>
